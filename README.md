@@ -25,9 +25,6 @@ Este projeto é compatível com arquivos `.db` criptografados via SQLCipher. A s
 
 123Mudar
 
-markdown
-Copiar
-Editar
 
 > ⚠️ **Atenção:** Certifique-se de ter autorização para acessar e analisar os arquivos utilizados com esta ferramenta.
 
