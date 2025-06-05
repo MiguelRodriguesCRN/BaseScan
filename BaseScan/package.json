@@ -1,0 +1,14 @@
+{
+  "name": "sqlcipher-electron-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^25.3.0"
+  },
+  "dependencies": {
+    "@journeyapps/sqlcipher": "^5.0.0"
+  }
+}
