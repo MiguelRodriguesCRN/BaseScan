@@ -1,11 +1,14 @@
-const { app, BrowserWindow, dialog, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const sqlite3 = require('@journeyapps/sqlcipher').verbose();
+const { selecionarArquivo, consultarDB } = require('./src/db');
+const { abrirTela } = require('./src/navigation');
 
-function createWindow () {
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+let win;
+
+function createWindow() {
+  win = new BrowserWindow({
+    width: 1000,
+    height: 700,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -13,47 +16,17 @@ function createWindow () {
     }
   });
 
-  win.loadFile('index.html');
-  // win.webContents.openDevTools(); // Descomente para debugar
+  win.loadFile('pages/inicio.html');
 }
 
 app.whenReady().then(() => {
   createWindow();
 
-  ipcMain.handle('selecionar-arquivo', async () => {
-    const { canceled, filePaths } = await dialog.showOpenDialog({
-      filters: [{ name: 'SQLite Database', extensions: ['db', 'sqlite'] }],
-      properties: ['openFile']
-    });
-    if (canceled) {
-      return null;
-    } else {
-      return filePaths[0];
-    }
-  });
+  ipcMain.handle('selecionar-arquivo', selecionarArquivo);
 
-  ipcMain.handle('consultar-db', async (event, { dbPath, senha }) => {
-    return new Promise((resolve, reject) => {
-      const db = new sqlite3.Database(dbPath, (err) => {
-        if (err) return reject('Erro ao abrir o banco: ' + err.message);
+  ipcMain.handle('consultar-db', (event, { dbPath, senha }) => consultarDB(dbPath, senha));
 
-        db.run(`PRAGMA key = '${senha}';`, (err) => {
-          if (err) return reject('Erro na PRAGMA key: ' + err.message);
-
-          db.run(`PRAGMA cipher_compatibility = 3;`, (err) => {
-            if (err) return reject('Erro no cipher_compatibility: ' + err.message);
-
-            db.all("SELECT * FROM Lesson WHERE IsSync = 0;", (err, rows) => {
-              if (err) return reject('Erro na consulta: ' + err.message);
-
-              db.close();
-              resolve(rows);
-            });
-          });
-        });
-      });
-    });
-  });
+  ipcMain.handle('abrir-tela', (event, tipo) => abrirTela(win, tipo));
 });
 
 app.on('window-all-closed', () => {
