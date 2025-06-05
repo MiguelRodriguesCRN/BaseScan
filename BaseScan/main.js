@@ -7,18 +7,15 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),  // <-- aqui só o preload.js
+      preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: false
     }
   });
 
   win.loadFile('index.html');
-
-  // Para abrir o DevTools e debugar
-  // win.webContents.openDevTools();
+  // win.webContents.openDevTools(); // Descomente para debugar
 }
-
 
 app.whenReady().then(() => {
   createWindow();

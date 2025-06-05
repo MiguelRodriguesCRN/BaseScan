@@ -2,7 +2,6 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnSelecionar = document.getElementById('btnSelecionar');
   const caminhoArquivo = document.getElementById('caminhoArquivo');
   const btnConsultar = document.getElementById('btnConsultar');
-  const senhaInput = document.getElementById('senha');
   const resultado = document.getElementById('resultado');
 
   let arquivoSelecionado = null;
@@ -24,15 +23,12 @@ window.addEventListener('DOMContentLoaded', () => {
       alert('Selecione um arquivo .db antes!');
       return;
     }
-    if (!senhaInput.value) {
-      alert('Informe a senha do banco!');
-      return;
-    }
 
     resultado.innerHTML = 'Consultando...';
 
     try {
-      const rows = await window.electronAPI.consultarDB(arquivoSelecionado, senhaInput.value);
+      const rows = await window.electronAPI.consultarDB(arquivoSelecionado, '123Mudar');
+
       if (rows.length === 0) {
         resultado.innerHTML = '<p>✅ Nenhuma aula pendente.</p>';
       } else {
