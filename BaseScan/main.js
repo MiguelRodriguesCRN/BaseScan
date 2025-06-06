@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const { selecionarArquivo, consultarDB } = require('./src/db');
+const { selecionarArquivo, selecionarArquivoLog, consultarDB } = require('./src/db');
 const { abrirTela } = require('./src/navigation');
+const { analisarLog } = require('./src/logAnalise');
 
 let win;
 
@@ -23,10 +24,10 @@ app.whenReady().then(() => {
   createWindow();
 
   ipcMain.handle('selecionar-arquivo', selecionarArquivo);
-
+  ipcMain.handle('selecionar-arquivo-log', selecionarArquivoLog);
   ipcMain.handle('consultar-db', (event, { dbPath, senha }) => consultarDB(dbPath, senha));
-
   ipcMain.handle('abrir-tela', (event, tipo) => abrirTela(win, tipo));
+  ipcMain.handle('analisar-log', (event, { caminho, cpf }) => analisarLog(caminho, cpf));
 });
 
 app.on('window-all-closed', () => {

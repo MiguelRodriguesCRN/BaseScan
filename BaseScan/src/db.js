@@ -9,6 +9,14 @@ async function selecionarArquivo() {
   return canceled ? null : filePaths[0];
 }
 
+async function selecionarArquivoLog() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({
+    filters: [{ name: 'Arquivos de Log', extensions: ['log'] }],
+    properties: ['openFile']
+  });
+  return canceled ? null : filePaths[0];
+}
+
 function consultarDB(dbPath, senha) {
   return new Promise((resolve, reject) => {
     const db = new sqlite3.Database(dbPath, (err) => {
@@ -34,5 +42,6 @@ function consultarDB(dbPath, senha) {
 
 module.exports = {
   selecionarArquivo,
+  selecionarArquivoLog,
   consultarDB
 };
