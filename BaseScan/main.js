@@ -27,7 +27,7 @@ app.whenReady().then(() => {
   ipcMain.handle('selecionar-arquivo-log', selecionarArquivoLog);
   ipcMain.handle('consultar-db', (event, { dbPath, senha }) => consultarDB(dbPath, senha));
   ipcMain.handle('abrir-tela', (event, tipo) => abrirTela(win, tipo));
-  ipcMain.handle('analisar-log', (event, { caminho, cpf }) => analisarLog(caminho, cpf));
+  ipcMain.handle('analisar-log', (event, { caminho, cpf, uf }) => analisarLog(caminho, cpf, uf));
 });
 
 app.on('window-all-closed', () => {
