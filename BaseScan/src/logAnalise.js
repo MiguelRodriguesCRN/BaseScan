@@ -1,9 +1,10 @@
 const analisarLogDefault = require('./LogsUFs/Default/analisarLog');
 const analisarLogCE = require('./LogsUFs/CE/analisarLog');
 const analisarLogMA = require('./LogsUFs/MA/analisarLog');
+const analisarLogSE = require('./LogsUFs/SE/analisarLog');
 
 const analisadoresPorUF = {
-  SE: analisarLogDefault,
+  SE: analisarLogSE,
   CE: analisarLogCE,
   AL: analisarLogDefault,
   BA: analisarLogDefault,

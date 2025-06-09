@@ -3,6 +3,7 @@ const path = require('path');
 const { selecionarArquivo, selecionarArquivoLog, consultarDB } = require('./src/db');
 const { abrirTela } = require('./src/navigation');
 const { analisarLog } = require('./src/logAnalise');
+const { analisarDesligamento } = require('./src/desligamentoAnalise');
 
 let win;
 
@@ -28,6 +29,7 @@ app.whenReady().then(() => {
   ipcMain.handle('consultar-db', (event, { dbPath, senha }) => consultarDB(dbPath, senha));
   ipcMain.handle('abrir-tela', (event, tipo) => abrirTela(win, tipo));
   ipcMain.handle('analisar-log', (event, { caminho, cpf, uf }) => analisarLog(caminho, cpf, uf));
+  ipcMain.handle('analisar-desligamento', (event, filePath) => analisarDesligamento(filePath));
 });
 
 app.on('window-all-closed', () => {
