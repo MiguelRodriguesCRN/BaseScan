@@ -11,6 +11,15 @@
   <input id="fileInput" type="file" accept=".csv" />
   <div id="resultado" style="margin-top: 20px;"></div>
 
+
+  <button onclick="navegar('inicio')">Voltar</button>
+
+    <script>
+    function navegar(tipo) {
+      window.electronAPI.abrirTela(tipo);
+    }
+  </script>
+
   <script src="../renderer/desligamentoRenderer.js"></script>
 </body>
 </html>

@@ -23,6 +23,16 @@
 
   <div id="resultado"></div>
 
+  <button onclick="navegar('inicio')">Voltar</button>
+
+    <script>
+    function navegar(tipo) {
+      window.electronAPI.abrirTela(tipo);
+    }
+  </script>
+
+
   <script src="../renderer/aulasRenderer.js"></script>
+
 </body>
 </html>
