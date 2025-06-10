@@ -22,6 +22,15 @@
   <button id="selecionar">Selecionar Arquivo</button>
   <p id="resultado"></p>
 
+
+  <button onclick="navegar('inicio')">Voltar</button>
+
+    <script>
+    function navegar(tipo) {
+      window.electronAPI.abrirTela(tipo);
+    }
+  </script>
+
   <script src="../renderer/logsRenderer.js"></script>
 </body>
 </html>
