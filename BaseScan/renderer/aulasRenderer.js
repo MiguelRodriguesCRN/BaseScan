@@ -27,10 +27,10 @@ window.addEventListener('DOMContentLoaded', () => {
     resultado.innerHTML = 'Consultando...';
 
     try {
-      const rows = await window.electronAPI.consultarDB(arquivoSelecionado, '123Mudar');
+      const rows = await window.electronAPI.consultarDB({ dbPath: arquivoSelecionado, senha: '123Mudar' }); // Ajuste no dbPath para chamada no preload :)
 
       if (rows.length === 0) {
-        resultado.innerHTML = '<p>✅ Nenhuma aula pendente.</p>';
+        resultado.innerHTML = '<p>✅ Nenhuma aula pendente .</p>';
       } else {
         let html = '<table><thead><tr>';
         for (const key of Object.keys(rows[0])) {
