@@ -1,27 +1,25 @@
-const fs = require('fs');
+const analisarLogDefault = require('./LogsUFs/Default/analisarLog');
+const analisarLogCE = require('./LogsUFs/CE/analisarLog');
+const analisarLogMA = require('./LogsUFs/MA/analisarLog');
+const analisarLogSE = require('./LogsUFs/SE/analisarLog');
 
-function analisarLog(caminhoArquivo, cpf) {
-  return new Promise((resolve, reject) => {
-    if (!caminhoArquivo.endsWith('_Browser.txt') && !caminhoArquivo.endsWith('_Browser.log')) {
-      return reject('O arquivo selecionado não é um log válido (_Browser.txt ou _Browser.log).');
-    }
+const analisadoresPorUF = {
+  SE: analisarLogSE,
+  CE: analisarLogCE,
+  AL: analisarLogDefault,
+  BA: analisarLogDefault,
+  MA: analisarLogMA,
+  RN: analisarLogDefault,
+  PB: analisarLogDefault,
+  PE: analisarLogDefault,
+  MG: analisarLogDefault,
+  Default: analisarLogDefault
+};
 
-    fs.readFile(caminhoArquivo, 'utf-8', (err, data) => {
-      if (err) return reject('Erro ao ler o arquivo: ' + err.message);
-
-      const linhas = data.split('\n');
-      for (let i = 0; i < linhas.length - 1; i++) {
-        if (linhas[i].includes(cpf)) {
-          const proximaLinha = linhas[i + 1];
-          if (proximaLinha.includes('A conexão com o dispositivo foi perdida')) {
-            return resolve(true); // Desconexão detectada
-          }
-        }
-      }
-
-      return resolve(false); // Sem desconexão após o CPF
-    });
-  });
+function analisarLog(caminhoArquivo, cpf, uf) {
+  const ufUpper = (uf || 'Default').toUpperCase();
+  const analisador = analisadoresPorUF[ufUpper] || analisadoresPorUF['Default'];
+  return analisador(caminhoArquivo, cpf);
 }
 
 module.exports = { analisarLog };

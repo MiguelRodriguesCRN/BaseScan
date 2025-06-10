@@ -3,7 +3,9 @@ const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('electronAPI', {
   selecionarArquivo: () => ipcRenderer.invoke('selecionar-arquivo'),
   selecionarArquivoLog: () => ipcRenderer.invoke('selecionar-arquivo-log'),
-  consultarDB: (dbPath, senha) => ipcRenderer.invoke('consultar-db', { dbPath, senha }),
-  abrirTela: (tela) => ipcRenderer.invoke('abrir-tela', tela),
-  analisarLog: (dados) => ipcRenderer.invoke('analisar-log', dados)
+  consultarDB: (data) => ipcRenderer.invoke('consultar-db', data),
+  abrirTela: (tipo) => ipcRenderer.invoke('abrir-tela', tipo),
+  analisarLog: (data) => ipcRenderer.invoke('analisar-log', data),
+  analisarDesligamento: (filePath) => ipcRenderer.invoke('analisar-desligamento', filePath), // <<< adiciona aqui
+  
 });
