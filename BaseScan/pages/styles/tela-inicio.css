@@ -1,0 +1,87 @@
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 32px;
+  }
+
+  .sub-titulo {
+    font-size: 16px;
+  }
+
+  button {
+    width: 90%;
+    max-width: 280px;
+    font-size: 14px;
+  }
+
+  .btns {
+    gap: 12px;
+  }
+} 
+
+
+body {
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+   
+}
+
+.titulo {
+  font-family: 'Alumni Sans SC', sans-serif;
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #000000;
+  margin-bottom: 100px;
+}
+
+.mb-4 {
+  font-size: 22px;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 600;
+  margin-bottom: 35px;
+  color: #000000;
+}
+
+.d-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+}
+
+button {
+  width: 260px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: 0.3s ease;
+  font-family: "Sofia Sans Semi Condensed", sans-serif;
+}
+
+.btn-primary, .btn-danger {
+  background-color: #0A1A33;
+  color: white;
+}
+
+.btn-secondary {
+  background-color: #A2B6C6;
+  color: #0A1A33;
+}
+
+.btn-primary:hover,
+.btn-danger:hover {
+  background-color: #071225;
+}
+
+.btn-secondary:hover {
+    background-color: #90A9BC;
+}
