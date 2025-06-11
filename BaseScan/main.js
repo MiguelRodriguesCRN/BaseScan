@@ -4,6 +4,7 @@ const { selecionarArquivo, selecionarArquivoLog, consultarDB } = require('./src/
 const { abrirTela } = require('./src/navigation');
 const { analisarLog } = require('./src/logAnalise');
 const { analisarDesligamento } = require('./src/desligamentoAnalise');
+const { analisarSaltosTempo } = require('./src/saltoAnalise');
 
 let win;
 
@@ -30,6 +31,10 @@ app.whenReady().then(() => {
   ipcMain.handle('abrir-tela', (event, tipo) => abrirTela(win, tipo));
   ipcMain.handle('analisar-log', (event, { caminho, cpf, uf }) => analisarLog(caminho, cpf, uf));
   ipcMain.handle('analisar-desligamento', (event, filePath) => analisarDesligamento(filePath));
+  ipcMain.handle('analisar-saltos-tempo', (event, { dbPath, senha, lessonOid }) => {
+  return analisarSaltosTempo(dbPath, senha, lessonOid);
+  
+});
 });
 
 app.on('window-all-closed', () => {

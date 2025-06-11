@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Análise de Saltos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f9f9f9;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    button {
+      margin: 10px 0;
+      padding: 10px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    #caminhoArquivo,
+    #resultadoSaltos {
+      margin-top: 10px;
+      padding: 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+    }
+
+    ul {
+      margin: 10px 0;
+      padding-left: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Análise de Saltos de Tempo</h1>
+
+  <button id="btnSelecionar">Selecionar arquivo .db</button>
+  <div id="caminhoArquivo">Nenhum arquivo selecionado.</div>
+
+  <input
+    type="text"
+    id="lessonOidInput"
+    placeholder="Digite o LessonOID da aula"
+  />
+
+  <button id="btnAnalisarSaltos">Analisar Saltos</button>
+  <div id="resultadoSaltos"></div>
+
+  <button onclick="navegar('inicio')">⬅ Voltar</button>
+
+  <script>
+    function navegar(tipo) {
+      window.electronAPI.abrirTela(tipo);
+    }
+  </script>
+
+  <script src="../renderer/saltoRenderer.js"></script>
+</body>
+</html>
