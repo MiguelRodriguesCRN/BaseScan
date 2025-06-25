@@ -7,8 +7,5 @@
   },
   "devDependencies": {
     "electron": "^25.3.0"
-  },
-  "dependencies": {
-    "@journeyapps/sqlcipher": "^5.0.0"
   }
 }

@@ -1,0 +1,222 @@
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .sub-titulo {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  #btnSelecionar,
+  #btnConsultar {
+    width: 90%;
+    max-width: 280px;
+    font-size: 14px;
+    height: 45px;
+  }
+
+  #resultado table {
+    font-size: 12px;
+  }
+
+  #resultado th,
+  #resultado td {
+    padding: 10px;
+  }
+
+  #caminhoArquivo {
+    width: 90%;
+  }
+
+  .tabela-wrapper {
+    padding: 5px;
+  }
+}
+
+body {
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Sofia Sans Semi Condensed", sans-serif;
+}
+
+button[onclick] {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  background-color: #0b1c33;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+.titulo {
+  font-family: 'Alumni Sans SC', sans-serif;
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #000000;
+  margin-bottom: 30px;
+}
+
+.sub-titulo {
+  font-size: 22px;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+#ajuda-container {
+  position: fixed;
+  top: 100px;
+  right: -430px;
+  width: 300px;
+  height: 300px;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0,0,0,0.3);
+  transition: right 0.3s ease;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+  border-radius: 8px 0 0 8px;
+}
+
+#btnAjuda {
+  position: fixed;
+  top: 40px;
+  right: 35px;
+  z-index: 999;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: 2px solid #0A1A33;
+  border-radius: 8px;
+  background-color: transparent;
+  color: #0A1A33;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+#btnAjuda:hover {
+  background-color: #0A1A33;
+  color: white;
+}
+
+#btnFechar{
+  float: right;
+  font-size: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+.pagina-ajuda button {
+  text-align: left;
+}
+
+#btnSelecionar,
+#btnConsultar {
+  width: 260px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 540;
+  cursor: pointer;
+  transition: 0.3s ease;
+  background-color: #0A1A33;
+  color: white;
+  margin-bottom: 15px;
+}
+
+#btnSelecionar:hover,
+#btnConsultar:hover {
+  background-color: #1a2a47;
+}
+
+#caminhoArquivo {
+  display: none;
+  border: 1px solid #b8daff;
+  padding: 10px;
+  border-radius: 3px;
+  width: 250px;
+  text-align: center;
+  font-size: 15px;
+  margin-bottom: 15px;
+  background-color: #A2B6C6;
+  color: #000000;
+  transition: 0.3s ease;
+}
+
+.retorno-vazio {
+    color: #469427;
+    font-size: 17px;
+}
+
+/* Configurações da tabela*/
+
+#resultado {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.tabela-resultados {
+  margin: 20px auto 50px auto;
+  border-collapse: collapse;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-radius: 10px;
+}
+
+.tabela-wrapper {
+  width: 100%;
+  max-width: 590px;
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+#resultado th, #resultado td {
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+#resultado thead {
+    background-color: #A2B6C6;
+    font-weight: bold;
+}
+
+table .resultados {
+  margin-top: 10px;
+}
+
+/* Scroll */
+.tabela-wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.tabela-wrapper::-webkit-scrollbar-track {
+  background: #636f7c;
+  border-radius: 5px;
+} 
+
+.tabela-wrapper::-webkit-scrollbar-thumb {
+  background-color: #1a2a47;
+  border-radius: 5px;
+  border: 1px solid #35485c;
+}

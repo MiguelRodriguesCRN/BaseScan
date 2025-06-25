@@ -5,11 +5,38 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Análise de Desligamento (Saltos)</title>
+  <link rel="stylesheet" href="styles/tela-desligamento.css">
+  <style>
+  @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Fira+Sans:wght@400;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+  </style>
 </head>
 <body>
-  <h1>Analisador de Saltos de Tempo</h1>
+  <h1 class="titulo">SQL Cipher</h1>
+  <h2 class="sub-titulo">Analisador de Saltos de Tempo</h2>
+  
+<button id="btnAjuda">Precisa de ajuda com a análise? Clique aqui</button>
+
+ <div id="ajuda-container">
+   <button id="btnFechar">&times;</button>
+
+  <div id="pagina1" class="pagina-ajuda">
+    <h3>Ajuda na análise</h3>
+    <p>(Textos iistrativos, serão refinados futuramente)Para realizar a análise, selecione o arquivo dataBase coletado.</p>
+    <p>Após a selção do arquivo, verifique o retorno da analise, o retorno informa se a telemetria possui salto de desligamento e aponta o horário de inicio/fim, duração e se o salto é maior ou menor que 5 minutos.</p>
+    <button id="proxima1">Próximo &rarr;</button>
+  </div>
+
+  <div id="pagina2" class="pagina-ajuda" style="display: none;">
+    <h3>Informações adicionais</h3>
+    <p>Importante verificar com cautela as informações retornadas.</p>
+    <p>Caso o salto seja maior que 5 minutos, siga com a abertura para do N2 responsável pelo estado.</p>
+    <button id="voltar1">&larr; Voltar</button>
+  </div>
+</div>
+
+  <label for="fileInput" class="custom-arquivo">Selecionar Arquivo</label>
   <input id="fileInput" type="file" accept=".csv" />
-  <div id="resultado" style="margin-top: 20px;"></div>
+  <div id="resultado" style="margin-top: 20px; margin-bottom: 40px;"></div>
 
 
   <button onclick="navegar('inicio')">Voltar</button>
