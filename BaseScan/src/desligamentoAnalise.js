@@ -22,7 +22,7 @@ function analisarDesligamento(csvText) {
     const minutes = Math.floor(diffMs / 60000);
 
     if (minutes >= 1) {
-      const status = minutes >= 5 ? 'Salto > 5 min!' : 'Salto detectado';
+      const status = minutes >= 5 ? 'Salto > 5 min!' : 'Salto < 5 min!';
       const formatDate = (d) => {
         const dd = String(d.getDate()).padStart(2, '0');
         const mm = String(d.getMonth() + 1).padStart(2, '0');

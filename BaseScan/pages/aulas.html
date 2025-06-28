@@ -5,21 +5,41 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Consulta SQLCipher</title>
-<style>
-  body { font-family: Arial, sans-serif; padding: 20px; }
-  button { margin: 10px 0; padding: 10px; font-size: 16px; }
-  table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 5px; }
-  table { width: 100%; margin-top: 20px; }
-</style>
+<link rel="stylesheet" href="styles/tela-aulas.css">
+ <style>
+  @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Fira+Sans:wght@400;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+  </style>
 </head>
 <body>
-  <h1>Consulta SQLCipher</h1>
-  <button id="btnSelecionar">Selecionar arquivo .db</button>
-  <div id="caminhoArquivo"></div>
+  <h1 class="titulo">SQL Cipher</h1>
+  <h2 class="sub-titulo">Consulta de Aulas Presas</h2>
+
+  <button id="btnAjuda">Precisa de ajuda com a análise? Clique aqui</button>
+
+ <div id="ajuda-container">
+   <button id="btnFechar">&times;</button>
+
+  <div id="pagina1" class="pagina-ajuda">
+    <h3>Ajuda na análise</h3>
+    <p>Para realizar a análise, selecione o arquivo .db coletado e clique em "Verificar Aulas Pendentes".</p>
+    <p>Caso o arquivo não carregue, verifique se a extensão está correta ou se a base coletada está corrompida.</p>
+    <button id="proxima1">Próximo &rarr;</button>
+  </div>
+
+  <div id="pagina2" class="pagina-ajuda" style="display: none;">
+    <h3>Informações adicionais</h3>
+    <p>Depois de verificar a base, a aplicação retorna o informação das aulas presas nessa base.</p>
+    <p>Caso possua aulas presas, siga com a abertura do chamado para envio manual do N2 responsável pelo estado.</p>
+    <button id="voltar1">&larr; Voltar</button>
+  </div>
+</div>
+
+  <button id="btnSelecionar">Selecione  arquivo .db</button>
+  <div id="caminhoArquivo" style="display: none;"></div>
 
   <!-- Campo de senha removido -->
 
-  <button id="btnConsultar">Consultar Aulas Pendentes</button>
+  <button id="btnConsultar">Verificar Aulas Pendentes</button>
 
   <div id="resultado"></div>
 

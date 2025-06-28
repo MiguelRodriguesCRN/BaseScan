@@ -1,0 +1,95 @@
+body {
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Sofia Sans Semi Condensed", sans-serif;
+}
+
+button[onclick] {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  background-color: #0b1c33;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: lighter;
+  cursor: pointer;
+}
+
+.titulo {
+  font-family: 'Alumni Sans SC', sans-serif;
+  font-size: 60px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #000000;
+  margin-bottom: 30px;
+}
+
+.sub-titulo {
+  font-size: 22px;
+  font-family: "Fira Sans", sans-serif;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+.linha-inputs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+#cpf {
+  border: 2px solid #59595e;
+  padding: 10px;
+  border-radius: 3px;
+  width: 235px;
+  text-align: center;
+  font-size: 15px;
+  background-color: #A2B6C6;
+  color: #000000;
+  transition: 0.3s ease;
+}
+
+#uf {
+  width: 60px;
+  height: 40px;
+  text-align: center;
+  font-size: 17px;
+  background-color: #0A1A33;
+  color: #ffffff;
+  font-family: "Fira Sans", sans-serif;
+  border: none;
+  border-radius: 5px;
+  line-height: 1;
+  padding: 0;
+}
+
+#selecionar {
+  width: 130px;
+  height: 50px;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 540;
+  cursor: pointer;
+  background-color: #0A1A33;
+  color: white;
+  transition: 0.3s ease;
+}
+
+option {
+  background-color: #243550;
+}
+
