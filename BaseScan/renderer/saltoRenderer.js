@@ -25,7 +25,7 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    resultado.innerHTML = 'Analisando...';
+    resultado.innerHTML = 'Analisando... Espera';
 
     try {
       const resposta = await window.electronAPI.analisarSaltosTempo({
@@ -34,12 +34,17 @@ window.addEventListener('DOMContentLoaded', () => {
         lessonOid: lessonOid
       });
 
+      if (!resposta.oidEncontrado) {
+        resultado.innerHTML = `<p style="color:orange;">⚠️ LessonOID "${lessonOid}" não encontrado na base.</p>`;
+        return;
+      }
+
       if (!resposta.houveSalto) {
         resultado.innerHTML = '<p>✅ Nenhum salto de tempo encontrado.</p>';
       } else {
         let html = '<p>⚠️ Saltos detectados:</p><ul>';
         for (const salto of resposta.saltos) {
-          html += `<li>De ${salto.anterior} para ${salto.atual} — ${salto.diferencaSegundos} segundos</li>`;
+          html += `<li>De ${salto.anterior} para ${salto.atual} — ${Math.round(salto.diferencaSegundos)} segundos</li>`;
         }
         html += '</ul>';
         resultado.innerHTML = html;

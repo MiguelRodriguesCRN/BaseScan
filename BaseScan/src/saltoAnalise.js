@@ -17,7 +17,17 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
             (err, rows) => {
               if (err) return reject('Erro na consulta: ' + err.message);
 
-              const desligamentosLongos = [];
+              if (rows.length === 0) {
+                // LessonOID não encontrado
+                db.close();
+                return resolve({
+                  oidEncontrado: false,
+                  houveSalto: false,
+                  saltos: []
+                });
+              }
+
+              const saltos = [];
 
               for (let i = 1; i < rows.length; i++) {
                 const atual = new Date(formatInstant(rows[i].Instant));
@@ -25,7 +35,7 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
                 const diffSegundos = (atual - anterior) / 1000;
 
                 if (diffSegundos >= 300) {  // >= 5 minutos
-                  desligamentosLongos.push({
+                  saltos.push({
                     anterior: rows[i - 1].Instant,
                     atual: rows[i].Instant,
                     diferencaMinutos: Math.floor(diffSegundos / 60),
@@ -37,8 +47,9 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
               db.close();
 
               resolve({
-                houveDesligamentoLongo: desligamentosLongos.length > 0,
-                desligamentosLongos
+                oidEncontrado: true,
+                houveSalto: saltos.length > 0,
+                saltos: saltos
               });
             }
           );
