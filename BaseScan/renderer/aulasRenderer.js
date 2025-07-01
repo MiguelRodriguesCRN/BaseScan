@@ -61,20 +61,44 @@ window.addEventListener('DOMContentLoaded', () => {
         resultado.innerHTML = '<p class="retorno-vazio">✅ Nenhuma aula pendente.</p>';
         resultado.style.display = 'block';
       } else {
+        const colunasDesejadas = ['Code', 'IsSync', 'Renach', 'CPFCandidate', 'CPFInstructor', 'Start'];
+
+        // Cria o cabeçalho da tabela com uma coluna extra para "Campos Vazios"
         let html = '<div class="tabela-wrapper"><table class="tabela-resultado"><thead><tr>';
-        for (const key of Object.keys(rows[0])) {
-          html += `<th>${key}</th>`;
+        for (const coluna of colunasDesejadas) {
+          html += `<th>${coluna}</th>`;
         }
-        html += '</tr></thead><tbody>';
+        html += '<th>Campos Vazios</th></tr></thead><tbody>';
+
+        
         for (const row of rows) {
-          html += '<tr>';
+          
+          let camposVazios = [];
           for (const key in row) {
-            html += `<td>${row[key]}</td>`;
+            if (row[key] === null || row[key] === undefined || row[key] === '') {
+              camposVazios.push(key);
+            }
           }
+
+          
+          html += `<tr${camposVazios.length > 0 ? ' class="linha-vazia"' : ''}>`;
+          for (const coluna of colunasDesejadas) {
+            html += `<td>${row[coluna] !== undefined ? row[coluna] : ''}</td>`;
+          }
+          
+          html += `<td>${camposVazios.length > 0 ? camposVazios.join(', ') : 'Nenhum'}</td>`;
           html += '</tr>';
         }
-        html += '</tbody></table>';
-        resultado.innerHTML = html;
+        html += '</tbody></table></div>';
+
+        
+        const mensagemVazio = rows.some(row =>
+          Object.values(row).some(value => value === null || value === undefined || value === '')
+        )
+          ? '<p style="color: orange;">⚠️ Algumas linhas contêm campos vazios! Verifique a coluna "Campos Vazios" para detalhes.</p>'
+          : '';
+
+        resultado.innerHTML = mensagemVazio + html;
       }
     } catch (err) {
       resultado.innerHTML = `<p style="color:red;">Erro: ${err}</p>`;

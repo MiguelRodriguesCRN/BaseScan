@@ -175,17 +175,17 @@ button[onclick] {
 }
 
 .tabela-resultados {
-  margin: 20px auto 50px auto;
+  margin: 10px auto 40px auto;
   border-collapse: collapse;
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   border-radius: 10px;
 }
 
 .tabela-wrapper {
   width: 100%;
-  max-width: 590px;
+  max-width: 1000px;
   overflow-x: auto;
   margin-top: 20px;
 }
@@ -219,4 +219,8 @@ table .resultados {
   background-color: #1a2a47;
   border-radius: 5px;
   border: 1px solid #35485c;
+}
+
+.linha-vazia {
+  background-color: #ffe6e6; /* Fundo vermelho claro para destacar */
 }
