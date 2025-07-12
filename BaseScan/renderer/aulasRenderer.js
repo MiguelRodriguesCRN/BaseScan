@@ -7,8 +7,10 @@ window.addEventListener('DOMContentLoaded', () => {
   let arquivoSelecionado = null;
 
   btnSelecionar.addEventListener('click', async () => {
-    console.log('Botão selecionar clicado');
+    console.log('Clicou em Selecionar Arquivo...');
     const file = await window.electronAPI.selecionarArquivo();
+    console.log('Arquivo selecionado:', file);
+
     if (file) {
       arquivoSelecionado = file;
       caminhoArquivo.textContent = `Arquivo selecionado: ${file}`;
@@ -25,24 +27,15 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     resultado.innerHTML = 'Consultando...';
-
     try {
-      const rows = await window.electronAPI.consultarDB({ dbPath: arquivoSelecionado, senha: '123Mudar' }); // Ajuste no dbPath para chamada no preload :)
+      const rows = await window.electronAPI.consultarDB({ dbPath: arquivoSelecionado, senha: '123Mudar' });
 
       if (rows.length === 0) {
-        resultado.innerHTML = '<p>✅ Nenhuma aula pendente .</p>';
+        resultado.innerHTML = '<p>✅ Nenhuma aula pendente.</p>';
       } else {
-        let html = '<table><thead><tr>';
-        for (const key of Object.keys(rows[0])) {
-          html += `<th>${key}</th>`;
-        }
-        html += '</tr></thead><tbody>';
+        let html = '<table><thead><tr><th>Code</th><th>IsSync</th><th>Renach</th><th>CPFCandidate</th><th>CPFInstructor</th><th>Start</th></tr></thead><tbody>';
         for (const row of rows) {
-          html += '<tr>';
-          for (const key in row) {
-            html += `<td>${row[key]}</td>`;
-          }
-          html += '</tr>';
+          html += `<tr><td>${row.Code}</td><td>${row.IsSync}</td><td>${row.Renach}</td><td>${row.CPFCandidate}</td><td>${row.CPFInstructor}</td><td>${row.Start}</td></tr>`;
         }
         html += '</tbody></table>';
         resultado.innerHTML = html;

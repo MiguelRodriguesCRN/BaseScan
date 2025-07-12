@@ -1,12 +1,11 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  selecionarArquivo: () => ipcRenderer.invoke('selecionar-arquivo'),
-  selecionarArquivoLog: () => ipcRenderer.invoke('selecionar-arquivo-log'),
-  consultarDB: (data) => ipcRenderer.invoke('consultar-db', data),
-  abrirTela: (tipo) => ipcRenderer.invoke('abrir-tela', tipo),
-  analisarLog: (data) => ipcRenderer.invoke('analisar-log', data),
-  analisarDesligamento: (filePath) => ipcRenderer.invoke('analisar-desligamento', filePath), // <<< adiciona aqui
-  analisarSaltosTempo: (data) => ipcRenderer.invoke('analisar-saltos-tempo', data),
-  
+  abrirTela: (tipo) => ipcRenderer.invoke('abrir-tela', tipo), // Navegação entre telas
+  analisarDesligamento: (filePath) => ipcRenderer.invoke('analisar-desligamento', filePath), // Análise de desligamento
+  analisarLog: (data) => ipcRenderer.invoke('analisar-log', data), // Análise de logs
+  analisarSaltosTempo: (data) => ipcRenderer.invoke('analisar-saltos-tempo', data), // Análise de saltos de tempo
+  consultarDB: (data) => ipcRenderer.invoke('consultar-db', data), // Consulta geral no banco
+  selecionarArquivo: () => ipcRenderer.invoke('selecionar-arquivo'), // Selecionar arquivo .db
+  selecionarArquivoLog: () => ipcRenderer.invoke('selecionar-arquivo-log'), // Selecionar arquivo de log
 });
