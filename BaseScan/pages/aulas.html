@@ -1,58 +1,89 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Consulta SQLCipher</title>
-<link rel="stylesheet" href="styles/tela-aulas.css">
- <style>
-  @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Fira+Sans:wght@400;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Consulta SQLCipher</title>
+  <link rel="stylesheet" href="styles/tela-aulas.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Fira+Sans:wght@400;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
   </style>
 </head>
+
 <body>
-  <h1 class="titulo">SQL Cipher</h1>
-  <h2 class="sub-titulo">Consulta de Aulas Presas</h2>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar collapsed">
+      <div class="toggle-btn" id="toggleSidebar">☰</div>
+      <nav class="menu">
 
-  <button id="btnAjuda">Precisa de ajuda com a análise? Clique aqui</button>
+        <ul>
+          <li id="encaminharExame"><span class="icon">📄</span><span class="text">Logs de Exame</span></li>
+          <li id="encaminharDesligamento"><span class="icon">⏱</span><span class="text" >Desligamento</span></li>
+          <!-- Outras Funcionalidades são colocadas aqui -->
+        </ul>
+            <div class="sidebar-voltar">
+              <button id="voltar-sidebar">Voltar</button>
+            </div>
+      </nav>
+    </aside>
 
- <div id="ajuda-container">
-   <button id="btnFechar">&times;</button>
 
-  <div id="pagina1" class="pagina-ajuda">
-    <h3>Ajuda na análise</h3>
-    <p>Para realizar a análise, selecione o arquivo .db coletado e clique em "Verificar Aulas Pendentes".</p>
-    <p>Caso o arquivo não carregue, verifique se a extensão está correta ou se a base coletada está corrompida.</p>
-    <button id="proxima1">Próximo &rarr;</button>
+    <!-- Conteúdo principal -->
+    <main class="main-content">
+      <header>
+        <h1>Consulta de Aulas Presas</h1>
+        <p class="descricao">Verifique se existem aulas pendentes de sincronização na base coletada.</p>
+        <button id="btnAjuda">❓ Ajuda com a análise</button>
+      </header>
+
+      <section class="card">
+        <button id="btnSelecionar">📁 Selecionar arquivo .db</button>
+        <button id="btnConsultar">🔍 Verificar Aulas Pendentes</button>
+        <div id="caminhoArquivo"></div>
+      </section>
+
+    <div id="resultado"></div>
+
+    </main>
   </div>
 
-  <div id="pagina2" class="pagina-ajuda" style="display: none;">
-    <h3>Informações adicionais</h3>
-    <p>Depois de verificar a base, a aplicação retorna o informação das aulas presas nessa base.</p>
-    <p>Caso possua aulas presas, siga com a abertura do chamado para envio manual do N2 responsável pelo estado.</p>
-    <button id="voltar1">&larr; Voltar</button>
+  <!-- Painel de ajuda -->
+  <div id="ajuda-container">
+    <button id="btnFechar">&times;</button>
+
+    <div id="pagina1" class="pagina-ajuda">
+      <h3>Ajuda na análise</h3>
+      <p>Para realizar a análise, selecione o arquivo .db coletado e clique em "Verificar Aulas Pendentes".</p>
+      <p>Caso o arquivo não carregue, verifique se a extensão está correta ou se a base coletada está corrompida.</p>
+      <button id="proxima1">Próximo &rarr;</button>
+    </div>
+
+    <div id="pagina2" class="pagina-ajuda" style="display: none;">
+      <h3>Informações adicionais</h3>
+      <p>Depois de verificar a base, a aplicação retorna as informações das aulas presas.</p>
+      <p>Caso possua aulas presas, siga com a abertura do chamado para envio manual do N2 responsável pelo estado.</p>
+      <button id="voltar1">&larr; Voltar</button>
+    </div>
   </div>
-</div>
 
-  <button id="btnSelecionar">Selecione  arquivo .db</button>
-  <div id="caminhoArquivo" style="display: none;"></div>
+  <script src="../renderer/aulasRenderer.js"> </script>
 
-  <!-- Campo de senha removido -->
+  <script>
+      const sidebar = document.querySelector('.sidebar');
+      const toggleBtn = document.getElementById('toggleSidebar');
 
-  <button id="btnConsultar">Verificar Aulas Pendentes</button>
+    toggleBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('collapsed');
+    });
 
-  <div id="resultado"></div>
-
-  <button onclick="navegar('inicio')">Voltar</button>
-
-    <script>
-    function navegar(tipo) {
-      window.electronAPI.abrirTela(tipo);
-    }
+  function navegar(tipo) {
+    window.electronAPI.abrirTela(tipo);
+  }
   </script>
-
-
-  <script src="../renderer/aulasRenderer.js"></script>
-
 </body>
+
 </html>
+

@@ -6,6 +6,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   consultarDB: (data) => ipcRenderer.invoke('consultar-db', data),
   abrirTela: (tipo) => ipcRenderer.invoke('abrir-tela', tipo),
   analisarLog: (data) => ipcRenderer.invoke('analisar-log', data),
-  analisarDesligamento: (filePath) => ipcRenderer.invoke('analisar-desligamento', filePath), // <<< adiciona aqui
+  analisarDesligamento: (filePath) => ipcRenderer.invoke('analisar-desligamento', filePath) // <<< adiciona aqui
   
 });

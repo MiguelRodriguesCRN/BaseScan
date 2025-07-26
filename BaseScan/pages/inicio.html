@@ -4,30 +4,71 @@
 <head>
   <meta charset="UTF-8" />
   <title>Escolha de Análise</title>
-  <!-- Bootstrap CSS via CDN -->
   <link rel="stylesheet" href="styles/tela-inicio.css">
   <style>
   @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Fira+Sans:wght@400;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
   </style>
 </head>
-<body class="d-flex flex-column justify-content-center align-items-center vh-100">
 
-  <div class="text-center">
-    <h1 class="titulo">SQL Cipher</h1>
-    <h2 class="mb-4">Escolha o tipo de Análise</h2>
-
-    <div class="d-flex flex-column gap-3">
-      <button class="btn btn-primary btn-lg" onclick="navegar('aulas')">Aulas Presas</button>
-      <button class="btn btn-secondary btn-lg" onclick="navegar('logs')">Logs de Exame</button>
-      <button class="btn btn-danger btn-lg" onclick="navegar('desligamento')">Desligamento</button>
-    </div>
+<body>
+  <div class="dashboard-container">
     
+    <!-- Sidebar lateral -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-toggle" id="toggleSidebar" onclick="toggleSidebar()">☰</div>
+
+      <ul>
+        <li onclick="navegar('aulas')">
+          <span class="icon">📂</span>
+          <span class="link-text">Aulas Presas</span>
+        </li>
+        <li onclick="navegar('logs')">
+          <span class="icon">📄</span>
+          <span class="link-text">Logs de Exame</span>
+        </li>
+        <li onclick="navegar('desligamento')">
+          <span class="icon">⏱</span>
+          <span class="link-text">Desligamento</span>
+        </li>
+      </ul>
+
+    </aside>
+
+    <!-- Conteúdo principal -->
+    <main class="content">
+      <header>
+        <h1 class="titulo">Dashboard</h1>
+        <p class="subtitulo">Escolha uma das opções para realizar a análise</p>
+      </header>
+
+      <section class="cards">
+        <div id="superPratico" class="card" onclick="navegar('aulas')">
+          <h2>Aulas Presas</h2>
+          <p>Analisa ocorrências de aulas que não finalizaram corretamente no sistema.</p>
+        </div>
+        <div id="exameTeorico" class="card" onclick="navegar('logs')">
+          <h2>Logs de Exame</h2>
+          <p>Visualize os logs de execução e compare registros para identificar falhas.</p>
+        </div>
+        <div id="superPratico" class="card" onclick="navegar('desligamento')">
+          <h2>Desligamento</h2>
+          <p>Verifica problemas de desligamento abrupto e falhas de energia durante sessões.</p>
+        </div>
+      </section>
+    </main>
   </div>
 
   <script>
+    const toggleSidebarBtn = document.getElementById('toggleSidebar');
+    const sidebar = document.querySelector('.sidebar');
+    
     function navegar(tipo) {
       window.electronAPI.abrirTela(tipo);
     }
+
+    toggleSidebarBtn.addEventListener('click', () => {
+    sidebar.classList.toggle('expanded');
+    });
   </script>
 
   <!-- Bootstrap JS Bundle via CDN (inclui Popper) -->

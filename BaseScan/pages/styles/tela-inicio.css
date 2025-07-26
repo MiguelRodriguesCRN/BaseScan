@@ -1,85 +1,141 @@
-@media (max-width: 480px) {
-  .titulo {
-    font-size: 32px;
-  }
-
-  .sub-titulo {
-    font-size: 16px;
-  }
-
-  button {
-    width: 90%;
-    max-width: 280px;
-    font-size: 14px;
-  }
-
-  .btns {
-    gap: 12px;
-  }
-} 
-
-body {
-  background-color: #f9f9f9;
+body, h1, h2, p, ul {
   margin: 0;
   padding: 0;
-  min-height: 100vh;
-  text-align: center;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+  height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: flex-start; 
 }
 
-.titulo {
-  font-family: 'Alumni Sans SC', sans-serif;
-  font-size: 60px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #000000;
-  margin-bottom: 100px;
+.dashboard-container {
+  display: flex;
+  width: 100%;
 }
 
-.mb-4 {
-  font-size: 22px;
-  font-family: "Fira Sans", sans-serif;
-  font-weight: 600;
-  margin-bottom: 35px;
-  color: #000000;
+/* Sidebar */
+.sidebar {
+  background-color: #1e293b;
+  color: #fff;
+  width: 220px;
+  transition: width 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+  white-space: nowrap;
 }
 
-.d-flex {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 18px;
+.sidebar.expanded .link-text {
+  display: inline;
 }
 
-button {
-  width: 260px;
-  height: 50px;
-  border: none;
-  border-radius: 8px;
-  font-size: 17px;
-  font-weight: 540;
+.sidebar:not(.expanded) {
+  width: 70px;
+}
+
+.sidebar:not(.expanded) .link-text {
+  display: none;
+}
+
+.sidebar.open .sidebar-item .text {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 2rem;
+}
+
+.sidebar ul li {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
   cursor: pointer;
-  transition: 0.3s ease;
-  font-family: "Sofia Sans Semi Condensed", sans-serif;
+  transition: background 0.2s;
 }
 
-.btn-primary, .btn-danger {
-  background-color: #0A1A33;
-  color: white;
+.sidebar ul li:hover {
+  background-color: #334155;
 }
 
-.btn-secondary {
-  background-color: #A2B6C6;
-  color: #0A1A33;
+.sidebar i {
+  font-size: 1.2rem;
+  margin-right: 10px;
 }
 
-.btn-primary:hover,
-.btn-danger:hover {
-  background-color: #071225;
+/* Botão ☰ */
+.sidebar-toggle {
+  font-size: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  padding: 10px 0;
+  background-color: #0f172a;
 }
 
-.btn-secondary:hover {
-    background-color: #90A9BC;
+.sidebar .icon {
+  font-size: 1.2rem;
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+}
+
+/* Conteúdo */
+.content {
+  flex: 1;
+  padding: 2rem;
+}
+
+header .titulo {
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+header .subtitulo {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+/* Cards */
+.cards {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  padding: 20px 0;
+}
+
+.card {
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+  padding: 1.5rem;
+  flex: 1 1 200px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  max-width: 48%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.card h2 {
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+#superPratico {
+  background-color: rgba(0, 130, 240, 0.4);
+}
+
+#exameTeorico {
+  background-color: rgba(3, 153, 108, 0.6);
 }

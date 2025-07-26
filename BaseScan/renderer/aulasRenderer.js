@@ -5,19 +5,23 @@ window.addEventListener('DOMContentLoaded', () => {
   const resultado = document.getElementById('resultado');
 
   const btnAjuda = document.getElementById('btnAjuda');
-  const painelAjuda = document.getElementById('ajuda-container');
+  const ajudaContainer = document.getElementById('ajuda-container');
   const btnFechar = document.getElementById('btnFechar');
   const pagina1 = document.getElementById('pagina1');
   const pagina2 = document.getElementById('pagina2');
   const proxima1 = document.getElementById('proxima1');
   const voltar1 = document.getElementById('voltar1');
+  
+  const voltarSidebar = document.getElementById('voltar-sidebar');
+  const encaminharDesligamento = document.getElementById('encaminharDesligamento');
+  const encaminharExame = document.getElementById('encaminharExame');
 
   btnAjuda.addEventListener('click', () => {
-    painelAjuda.style.right = '0';
+    ajudaContainer.classList.add('ativo');
   });
 
   btnFechar.addEventListener('click', () => {
-    painelAjuda.style.right = '-430px';
+    ajudaContainer.classList.remove('ativo');
   });
 
   proxima1.addEventListener('click', () => {
@@ -28,6 +32,18 @@ window.addEventListener('DOMContentLoaded', () => {
   voltar1.addEventListener('click', () => {
     pagina2.style.display = 'none';
     pagina1.style.display = 'block';
+  });
+
+  voltarSidebar.addEventListener('click', () => {
+    window.electronAPI.abrirTela('inicio');
+  });
+
+  encaminharDesligamento.addEventListener('click', () => {
+    window.electronAPI.abrirTela('desligamento');
+  });
+
+  encaminharExame.addEventListener('click', () => {
+    window.electronAPI.abrirTela('logs');
   });
 
   let arquivoSelecionado = null;
