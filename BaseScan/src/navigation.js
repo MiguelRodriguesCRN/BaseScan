@@ -3,7 +3,8 @@ function abrirTela(win, tipo) {
     aulas: 'pages/aulas.html',
     logs: 'pages/logs.html',
     desligamento: 'pages/desligamento.html',
-    inicio: 'pages/inicio.html'
+    inicio: 'pages/inicio.html',
+    salto: 'pages/salto.html'
   };
 
   const caminho = telaMap[tipo];
