@@ -74,12 +74,6 @@
       </div>
     </div>
 
-    <!-- Novo campo lateral -->
-    <div id="notaLateral" style="display: none;">
-      <input type="text" id="notaInput" placeholder="Adicione suas notas aqui..." style="width: 300px; padding: 10px; border-radius: 8px; border: 1px solid #d1d5db; margin-top: 60px;">
-    </div>
-  </div>
-
   <script src="../renderer/aulasRenderer.js"></script>
   <script>
     const sidebar = document.querySelector('.sidebar');
@@ -91,18 +85,7 @@
 
     function navegar(tipo) {
       window.electronAPI.abrirTela(tipo);
-    }
-
-    document.getElementById('btnConsultar').addEventListener('click', () => {
-      const resultadoTexto = document.getElementById('resultadoTexto');
-      const alertSucesso = document.getElementById('alertSucesso');
-      const notaLateral = document.getElementById('notaLateral');
-      // Simulação de verificação
-      resultadoTexto.value = 'Nenhuma aula pendente encontrada na base.';
-      resultadoTexto.style.display = 'block'; // Exibe a textarea com o resultado
-      alertSucesso.style.display = 'flex'; // Exibe o alerta de sucesso
-      notaLateral.style.display = 'block'; // Exibe o campo lateral
-    });
+    };
   </script>
 </body>
 </html>
