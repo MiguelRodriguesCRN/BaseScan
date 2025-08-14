@@ -3,6 +3,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const caminhoArquivo = document.getElementById('caminhoArquivo');
   const btnConsultar = document.getElementById('btnConsultar');
   const resultado = document.getElementById('resultado');
+  const alertSucesso = document.querySelector('.alert-sucesso');
 
   const btnAjuda = document.getElementById('btnAjuda');
   const ajudaContainer = document.getElementById('ajuda-container');
@@ -62,6 +63,7 @@ window.addEventListener('DOMContentLoaded', () => {
       caminhoArquivo.style.display = 'block';
     }
     resultado.innerHTML = '';
+    alertSucesso.style.display = 'none'
   });
 
   btnConsultar.addEventListener('click', async () => {
@@ -71,22 +73,25 @@ window.addEventListener('DOMContentLoaded', () => {
     }
 
     resultado.innerHTML = 'Consultando...';
+    alertSucesso.style.display = 'none';
     try {
       const rows = await window.electronAPI.consultarDB({ dbPath: arquivoSelecionado, senha: '123Mudar' });
 
       if (rows.length === 0) {
-        resultado.innerHTML = '<p class="retorno-vazio">✅ Nenhuma aula pendente.</p>';
-        resultado.style.display = 'block';
+        resultado.innerHTML = '';
+        alertSucesso.style.display = 'flex';
       } else {
-        let html = '<table><thead><tr><th>Code</th><th>IsSync</th><th>Renach</th><th>CPFCandidate</th><th>CPFInstructor</th><th>Start</th></tr></thead><tbody>';
+        let html = '<div class="tabela-wrapper" id="container-tabela"><table class="tabela-aulas"><thead><tr><th>Code</th><th>IsSync</th><th>Renach</th><th>CPFCandidate</th><th>CPFInstructor</th><th>Start</th></tr></thead><tbody>';
         for (const row of rows) {
           html += `<tr><td>${row.Code}</td><td>${row.IsSync}</td><td>${row.Renach}</td><td>${row.CPFCandidate}</td><td>${row.CPFInstructor}</td><td>${row.Start}</td></tr>`;
         }
-        html += '</tbody></table>';
+        html += '</tbody></table></div>';
         resultado.innerHTML = html;
+        alertSucesso.style.display = 'none'
       }
     } catch (err) {
       resultado.innerHTML = `<p style="color:red;">Erro: ${err}</p>`;
+      alertSucesso.style.display = 'none';
     }
   });
 });

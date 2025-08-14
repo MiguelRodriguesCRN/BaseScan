@@ -22,12 +22,16 @@
           <span class="icon">📂</span>
           <span class="link-text">Aulas Presas</span>
         </li>
-        <li onclick="navegar('logs')">
+       <!-- <li onclick="navegar('logs')">
           <span class="icon">📄</span>
           <span class="link-text">Logs de Exame</span>
-        </li>
-        <li onclick="navegar('desligamento')">
+        </li>-->
+       <!-- <li onclick="navegar('desligamento')">
           <span class="icon">⏱</span>
+          <span class="link-text">Desligamento</span> -->
+        
+        <li onclick="navegar('salto')">
+          <span class="icon">📴</span>
           <span class="link-text">Desligamento</span>
         </li>
       </ul>
@@ -46,13 +50,19 @@
           <h2>Aulas Presas</h2>
           <p>Analisa ocorrências de aulas que não finalizaram corretamente no sistema.</p>
         </div>
-        <div id="exameTeorico" class="card" onclick="navegar('logs')">
+
+       <!-- <div id="exameTeorico" class="card" onclick="navegar('logs')">
           <h2>Logs de Exame</h2>
           <p>Visualize os logs de execução e compare registros para identificar falhas.</p>
-        </div>
-        <div id="superPratico" class="card" onclick="navegar('desligamento')">
+        </div>-->
+        <!-- <div id="superPratico" class="card" onclick="navegar('desligamento')">
           <h2>Desligamento</h2>
           <p>Verifica problemas de desligamento abrupto e falhas de energia durante sessões.</p>
+        </div> -->
+
+        <div id="superPratico" class="card" onclick="navegar('salto')">
+          <h2>Salto de Desligamento</h2>
+          <p>Verifica saltos de desligamento durante a aula atraves de uma analise da base.</p>
         </div>
       </section>
     </main>

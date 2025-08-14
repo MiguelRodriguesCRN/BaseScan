@@ -13,7 +13,7 @@ body {
 
 .sidebar {
   width: 220px;
-  background-color: #04986c;
+  background-color: rgb(5, 92, 168);
   color: white;
   transition: width 0.3s ease;
 }
@@ -28,10 +28,10 @@ body {
 }
 
 .sidebar-voltar {
-  position: relative;
-  top: 630px;
-  right: 1180px;
-  text-align: center;
+  position: fixed;
+  bottom: 24px;
+  left: 90px;
+  z-index: 100;
   opacity: 1;
   transition: opacity 0.1s ease-in-out;
   pointer-events: auto;
@@ -39,13 +39,13 @@ body {
 
 #voltar-sidebar {
   position: relative;
-  background-color: #04986c;
+  background-color: rgb(3, 76, 139);
   color: white;
   transition: transform 0.1s ease;
 }
 
 #voltar-sidebar:hover {
-  background-color: #03704f;
+  background-color: rgb(2, 60, 112);
 }
 
 .toggle-btn {
@@ -53,7 +53,7 @@ body {
   text-align: center;
   cursor: pointer;
   padding: 10px 0;
-  background-color: #03704f;
+  background-color: rgb(3, 76, 139);
   margin-top: 15px;
 }
 
@@ -73,7 +73,7 @@ body {
 }
 
 .menu ul li:hover {
-  background-color: #03704f;
+  background-color: rgba(3, 76, 139, 0.8);
 }
 
 .menu .icon {
@@ -113,64 +113,6 @@ header h1 {
   max-width: 700px;
 }
 
-/* Input CPF */
-input[type="text"] {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    outline: none;
-    transition: all 0.2s ease;
-    background-color: #fff;
-    min-width: 180px;
-}
-
-/* Efeito no foco */
-input[type="text"]:focus {
-    border-color: #1a8d5f; /* verde do botão voltar */
-    box-shadow: 0 0 4px rgba(26, 141, 95, 0.4);
-}
-
-/* Select */
-select {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 14px;
-    background-color: #fff;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-/* Efeito no foco */
-select:focus {
-    border-color: #1a8d5f;
-    box-shadow: 0 0 4px rgba(26, 141, 95, 0.4);
-}
-
-/* Hover opcional */
-select:hover, input[type="text"]:hover {
-    border-color: #999;
-}
-
-/* Itens do select */
-select option {
-    background-color: #fff;
-    color: #333;
-    padding: 8px;
-}
-
-/* Item selecionado */
-select option:checked {
-    background-color: #1a8d5f;
-    color: #fff;
-}
-
-/* Hover nos itens (alguns navegadores suportam) */
-select option:hover {
-    background-color: #e6f3ee;
-}
-
 .botoes-container {
   display: flex;
   flex-wrap: wrap;
@@ -194,6 +136,16 @@ button:hover {
   background-color: #d1d5db;
 }
 
+#lessonOidInput {
+  padding: 10px 16px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 260px;
+  background-color: #f9fafb;
+  color: #1f2937;
+}
+
 #caminhoArquivo {
   margin-top: 12px;
   font-size: 14px;
@@ -203,6 +155,7 @@ button:hover {
 #resultadoSaltos {
   margin-top: 24px;
   font-size: 14px;
+  width: 58%;
   background-color: white;
   border-radius: 12px;
   padding: 16px;
@@ -263,6 +216,39 @@ button:hover {
   border-radius: 12px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   background-color: white;
+}
+
+.tabela-aulas {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.tabela-aulas thead {
+  background-color: #075985;
+  color: white;
+  text-align: left;
+  border: none;
+}
+
+.tabela-aulas th,
+.tabela-aulas td {
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 12px;
+  border: none;
+}
+
+.tabela-aulas td {
+  white-space: nowrap;
+  border-left: 1px solid #d1d5db;
+  border-right: 1px solid #d1d5db;
+}
+
+.tabela-aulas th {
+  font-weight: 600;
 }
 
 .alert-sucesso {

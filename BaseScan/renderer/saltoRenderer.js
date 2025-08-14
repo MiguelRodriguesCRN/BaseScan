@@ -4,6 +4,39 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnAnalisarSaltos = document.getElementById('btnAnalisarSaltos');
   const inputLessonOid = document.getElementById('lessonOidInput');
   const resultado = document.getElementById('resultadoSaltos');
+  const voltarSidebar = document.getElementById('voltar-sidebar');
+
+  const btnAjuda = document.getElementById("btnAjuda");
+  const ajudaContainer = document.getElementById("ajuda-container");
+  const btnFechar = document.getElementById("btnFechar");
+  const pagina1 = document.getElementById("pagina1");
+  const pagina2 = document.getElementById("pagina2");
+  const proxima1 = document.getElementById("proxima1");
+  const voltar1 = document.getElementById("voltar1");
+
+  btnAjuda.addEventListener("click", () => {
+    ajudaContainer.classList.add("ativo");
+    pagina1.style.display = "block";
+    pagina2.style.display = "none";
+  });
+
+  btnFechar.addEventListener("click", () => {
+    ajudaContainer.classList.remove("ativo");
+  });
+
+  proxima1.addEventListener("click", () => {
+    pagina1.style.display = "none";
+    pagina2.style.display = "block";
+  });
+
+  voltar1.addEventListener("click", () => {
+    pagina2.style.display = "none";
+    pagina1.style.display = "block";
+  });
+
+  voltarSidebar.addEventListener('click', () => {
+    window.electronAPI.abrirTela('inicio');
+  });
 
   let arquivoSelecionado = null;
 
@@ -27,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    resultado.innerHTML = 'Analisando... Espera';
+    resultado.innerHTML = 'Analisando... aguarde';
 
     try {
       const resposta = await window.electronAPI.analisarSaltosTempo({

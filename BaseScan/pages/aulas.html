@@ -18,18 +18,13 @@
     <aside class="sidebar collapsed">
       <div class="toggle-btn" id="toggleSidebar">☰</div>
       <nav class="menu">
-
         <ul>
           <li id="encaminharExame"><span class="icon">📄</span><span class="text">Logs de Exame</span></li>
-          <li id="encaminharDesligamento"><span class="icon">⏱</span><span class="text" >Desligamento</span></li>
+          <li id="encaminharDesligamento"><span class="icon">⏱</span><span class="text">Desligamento</span></li>
           <!-- Outras Funcionalidades são colocadas aqui -->
         </ul>
-            <div class="sidebar-voltar">
-              <button id="voltar-sidebar">Voltar</button>
-            </div>
       </nav>
     </aside>
-
 
     <!-- Conteúdo principal -->
     <main class="main-content">
@@ -40,50 +35,74 @@
       </header>
 
       <section class="card">
-        <button id="btnSelecionar">📁 Selecionar arquivo .db</button>
-        <button id="btnConsultar">🔍 Verificar Aulas Pendentes</button>
+        <div class="botoes-container">
+          <button id="btnSelecionar">📁 Selecionar arquivo .db</button>
+          <button id="btnConsultar">🔍 Verificar Aulas Pendentes</button>
+        </div>
+
         <div id="caminhoArquivo"></div>
       </section>
 
-    <div id="resultado"></div>
+      <div id="resultado">
+        <textarea id="resultadoTexto" rows="4" cols="50" placeholder="Resultado da consulta aparecerá aqui..." style="display: none; width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d1d5db; resize: vertical;"></textarea>
+      </div>
 
+      <div class="alert-sucesso" id="alertSucesso" style="display: none;">
+        <span class="icon">&#10003;</span>
+        <span class="mensagem">Nenhuma aula pendente.</span>
+      </div>
+
+      <div class="button-section">
+        <button id="voltar-sidebar">Voltar</button>
+      </div>
     </main>
-  </div>
 
-  <!-- Painel de ajuda -->
-  <div id="ajuda-container">
-    <button id="btnFechar">&times;</button>
-
-    <div id="pagina1" class="pagina-ajuda">
-      <h3>Ajuda na análise</h3>
-      <p>Para realizar a análise, selecione o arquivo .db coletado e clique em "Verificar Aulas Pendentes".</p>
-      <p>Caso o arquivo não carregue, verifique se a extensão está correta ou se a base coletada está corrompida.</p>
-      <button id="proxima1">Próximo &rarr;</button>
+    <!-- Painel de ajuda -->
+    <div id="ajuda-container">
+      <button id="btnFechar">&times;</button>
+      <div id="pagina1" class="pagina-ajuda">
+        <h3>Ajuda na análise</h3>
+        <p>Para realizar a análise, selecione o arquivo .db coletado e clique em "Verificar Aulas Pendentes".</p>
+        <p>Caso o arquivo não carregue, verifique se a extensão está correta ou se a base coletada está corrompida.</p>
+        <button id="proxima1">Próximo &rarr;</button>
+      </div>
+      <div id="pagina2" class="pagina-ajuda" style="display: none;">
+        <h3>Informações adicionais</h3>
+        <p>Depois de verificar a base, a aplicação retorna as informações das aulas presas.</p>
+        <p>Caso possua aulas presas, siga com a abertura do chamado para envio manual do N2 responsável pelo estado.</p>
+        <button id="voltar1">&larr; Voltar</button>
+      </div>
     </div>
 
-    <div id="pagina2" class="pagina-ajuda" style="display: none;">
-      <h3>Informações adicionais</h3>
-      <p>Depois de verificar a base, a aplicação retorna as informações das aulas presas.</p>
-      <p>Caso possua aulas presas, siga com a abertura do chamado para envio manual do N2 responsável pelo estado.</p>
-      <button id="voltar1">&larr; Voltar</button>
+    <!-- Novo campo lateral -->
+    <div id="notaLateral" style="display: none;">
+      <input type="text" id="notaInput" placeholder="Adicione suas notas aqui..." style="width: 300px; padding: 10px; border-radius: 8px; border: 1px solid #d1d5db; margin-top: 60px;">
     </div>
   </div>
 
-  <script src="../renderer/aulasRenderer.js"> </script>
-
+  <script src="../renderer/aulasRenderer.js"></script>
   <script>
-      const sidebar = document.querySelector('.sidebar');
-      const toggleBtn = document.getElementById('toggleSidebar');
+    const sidebar = document.querySelector('.sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
 
     toggleBtn.addEventListener('click', () => {
-    sidebar.classList.toggle('collapsed');
+      sidebar.classList.toggle('collapsed');
     });
 
-  function navegar(tipo) {
-    window.electronAPI.abrirTela(tipo);
-  }
+    function navegar(tipo) {
+      window.electronAPI.abrirTela(tipo);
+    }
+
+    document.getElementById('btnConsultar').addEventListener('click', () => {
+      const resultadoTexto = document.getElementById('resultadoTexto');
+      const alertSucesso = document.getElementById('alertSucesso');
+      const notaLateral = document.getElementById('notaLateral');
+      // Simulação de verificação
+      resultadoTexto.value = 'Nenhuma aula pendente encontrada na base.';
+      resultadoTexto.style.display = 'block'; // Exibe a textarea com o resultado
+      alertSucesso.style.display = 'flex'; // Exibe o alerta de sucesso
+      notaLateral.style.display = 'block'; // Exibe o campo lateral
+    });
   </script>
 </body>
-
 </html>
-
