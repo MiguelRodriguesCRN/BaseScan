@@ -1,124 +1,137 @@
+// src/main/saltoAnalise.js
 const sqlite3 = require('@journeyapps/sqlcipher').verbose();
 
 function formatInstant(instant) {
   try {
-    // Remove milissegundos, fusos horários ou caracteres extras
-    const cleanInstant = instant.split('.')[0].replace(/Z|[-+]\d{2}:\d{2}$/, '').trim();
-    // Divide a string no formato DD-MM-YYYY HH:MM:SS
+    if (!instant || typeof instant !== 'string') return null;
+    const cleanInstant = instant
+      .split('.')[0]
+      .replace(/Z|[-+]\d{2}:\d{2}$/, '')
+      .trim();
+
     const [dia, mes, anoHora] = cleanInstant.split('-');
-    if (!anoHora) throw new Error('Formato de ano/hora inválido');
+    if (!anoHora) return null;
+
     const [ano, hora] = anoHora.split(' ');
-    if (!ano || !hora) throw new Error('Formato de ano ou hora inválido');
+    if (!ano || !hora) return null;
 
-    // Formata como YYYY-MM-DD HH:MM:SS (sem Z, para interpretar no fuso local)
     const formatted = `${ano}-${mes}-${dia} ${hora}`;
-
-    // Valida a data
-    const date = new Date(formatted);
-    if (isNaN(date.getTime())) {
-      throw new Error(`Formato de data inválido: ${instant}`);
-    }
-    return formatted;
-  } catch (error) {
-    throw new Error(`Erro ao formatar Instant: ${instant} - ${error.message}`);
+    const d = new Date(formatted);
+    return Number.isNaN(d.getTime()) ? null : formatted;
+  } catch {
+    return null;
   }
 }
 
+function segundosParaTempo(segundos) {
+  if (typeof segundos !== 'number' || isNaN(segundos)) return '0s';
+  const horas = Math.floor(segundos / 3600);
+  const minutos = Math.floor((segundos % 3600) / 60);
+  const segs = Math.floor(segundos % 60);
+
+  const partes = [];
+  if (horas > 0) partes.push(`${horas}h`);
+  if (minutos > 0 || horas > 0) partes.push(`${minutos}m`);
+  partes.push(`${segs}s`);
+  return partes.join(' ');
+}
+
 function analisarSaltosTempo(dbPath, senha, lessonOid) {
-  return new Promise((resolve, reject) => {
-    const db = new sqlite3.Database(dbPath, (err) => {
-      if (err) return reject('Erro ao abrir o banco: ' + err.message);
+  return new Promise((resolve) => {
+    const resultBase = {
+      oidEncontrado: false,
+      houveSalto: false,
+      saltos: [],
+      sqlException: null,
+      sqlExceptions: [],
+    };
 
-      db.run(`PRAGMA key = '${senha}';`, (err) => {
-        if (err) return reject('Erro na PRAGMA key: ' + err.message);
+    const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
+      if (err) return resolve({ ...resultBase, error: `Erro ao abrir o banco: ${err.message}` });
 
-        db.run(`PRAGMA cipher_compatibility = 3;`, (err) => {
-          if (err) return reject('Erro no cipher_compatibility: ' + err.message);
+      db.run(`PRAGMA key = '${senha}';`, (errKey) => {
+        if (errKey) {
+          db.close();
+          return resolve({ ...resultBase, error: `Erro na PRAGMA key: ${errKey.message}` });
+        }
 
-          db.all(
-            `SELECT ID, Instant FROM Logger WHERE LessonOID = ? ORDER BY ID`,
-            [lessonOid],
-            (err, rows) => {
-              if (err) return reject('Erro na consulta: ' + err.message);
+        db.run(`PRAGMA cipher_compatibility = 3;`, (errCipher) => {
+          if (errCipher) {
+            db.close();
+            return resolve({ ...resultBase, error: `Erro no cipher_compatibility: ${errCipher.message}` });
+          }
 
-              if (rows.length === 0) {
+          db.get(`SELECT 1 FROM Logger WHERE LessonOid = ? LIMIT 1`, [lessonOid], (errCheck, rowCheck) => {
+            if (errCheck) {
+              db.close();
+              return resolve({ ...resultBase, error: `Erro na verificação do LessonOid: ${errCheck.message}` });
+            }
+
+            if (!rowCheck) {
+              db.close();
+              return resolve({ ...resultBase, oidEncontrado: false });
+            }
+
+            const sql = `
+              SELECT ID, Instant, Text
+              FROM Logger
+              WHERE LessonOid = ?
+              ORDER BY ID
+            `;
+
+            db.all(sql, [lessonOid], (errQuery, rows) => {
+              if (errQuery) {
                 db.close();
-                return resolve({
-                  oidEncontrado: false,
-                  houveSalto: false,
-                  saltos: [],
-                  houveRegressao: false
-                });
+                return resolve({ ...resultBase, error: `Erro na consulta: ${errQuery.message}` });
               }
 
-              const saltos = [];
-              let houveRegressao = false;
+              const out = { ...resultBase, oidEncontrado: true };
 
-              for (let i = 1; i < rows.length; i++) {
-                try {
-                  const instantAtual = rows[i].Instant;
-                  const instantAnterior = rows[i - 1].Instant;
-                  const idAtual = rows[i].ID;
-                  const idAnterior = rows[i - 1].ID;
+              const excRegex = /(sqliteexception|sqlexception)/i;
 
-                  // Valida se as entradas são strings válidas
-                  if (!instantAtual || !instantAnterior || typeof instantAtual !== 'string' || typeof instantAnterior !== 'string') {
-                    continue;
-                  }
-
-                  // Verifica se os IDs são crescentes
-                  if (idAtual <= idAnterior) {
-                    continue;
-                  }
-
-                  const formattedAtual = formatInstant(instantAtual);
-                  const formattedAnterior = formatInstant(instantAnterior);
-                  const atual = new Date(formattedAtual);
-                  const anterior = new Date(formattedAnterior);
-
-                  const diffSegundos = (atual.getTime() - anterior.getTime()) / 1000;
-
-                  if (isNaN(diffSegundos)) {
-                    continue;
-                  }
-
-                  if (diffSegundos < 0) {
-                    db.close();
-                    return resolve({
-                      oidEncontrado: true,
-                      houveSalto: false,
-                      saltos: [],
-                      houveRegressao: true
-                    });
-                  }
-
-                  if (diffSegundos >= 300) {
-                    saltos.push({
-                      anterior: instantAnterior,
-                      atual: instantAtual,
-                      diferencaMinutos: Math.floor(diffSegundos / 60),
-                      diferencaSegundos: diffSegundos
-                    });
-                  }
-                } catch (error) {
-                  continue;
+              for (const row of rows) {
+                const txt = typeof row.Text === 'string' ? row.Text : '';
+                if (excRegex.test(txt)) {
+                  out.sqlExceptions.push({
+                    id: row.ID,
+                    instant: row.Instant,
+                    text: txt,
+                  });
                 }
               }
 
-              db.close();
+              if (out.sqlExceptions.length > 0) {
+                out.sqlException = out.sqlExceptions[0].text;
+              }
 
-              resolve({
-                oidEncontrado: true,
-                houveSalto: saltos.length > 0,
-                saltos: saltos,
-                houveRegressao: houveRegressao
-              });
-            }
-          );
+              for (let i = 1; i < rows.length; i++) {
+                const fAnt = formatInstant(rows[i - 1].Instant);
+                const fAtu = formatInstant(rows[i].Instant);
+                if (!fAnt || !fAtu) continue;
+
+                const ant = new Date(fAnt);
+                const atu = new Date(fAtu);
+                const diffSegundos = (atu.getTime() - ant.getTime()) / 1000;
+
+                if (diffSegundos >= 300) {
+                  out.saltos.push({
+                    anterior: rows[i - 1].Instant,
+                    atual: rows[i].Instant,
+                    diferencaSegundos: diffSegundos,
+                    diferencaFormatada: segundosParaTempo(diffSegundos),
+                  });
+                }
+              }
+
+              out.houveSalto = out.saltos.length > 0;
+              db.close();
+              return resolve(out);
+            });
+          });
         });
       });
     });
   });
 }
 
-module.exports = { analisarSaltosTempo };
+module.exports = { analisarSaltosTempo, segundosParaTempo };
