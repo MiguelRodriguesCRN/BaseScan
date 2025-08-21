@@ -55,7 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    resultado.innerHTML = `<p style="color: #007bff;">⏳ Analisando...</p>`;
+    resultado.innerHTML = `<p class="analisando">⏳ Analisando...</p>`;
 
     try {
       const resposta = await window.electronAPI.analisarSaltosTempo({
@@ -66,75 +66,126 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (!resposta.oidEncontrado) {
         resultado.innerHTML = `
-          <div style="background-color: #fff4e6; border-left: 4px solid #ffa500; padding: 10px; border-radius: 5px;">
-            <p style="margin:0; font-weight: bold; color: #ff8000;">⚠️ LessonOID "${lessonOid}" não encontrado.</p>
+          <div class="tabela-wrapper">
+            <table class="tabela-erro">
+              <thead>
+                <tr><th>Mensagem</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>⚠️ LessonOID "${lessonOid}" não encontrado.</td></tr>
+              </tbody>
+            </table>
           </div>
         `;
         return;
       }
 
       resultado.innerHTML = '';
-
       let problemasEncontrados = false;
+      let sqlExceptionHTML = "";
+
+      const saltosValidos = resposta.saltos.filter(s => !isNaN(s.diferencaSegundos));
+
+      let mensagemStatus = '';
+      let corStatus = '';
+
+      if (resposta.houveRegressao) {
+        mensagemStatus = '⚠️ Houve regressão detectada!';
+        corStatus = 'red';
+        problemasEncontrados = true;
+      } else if (saltosValidos.length === 0) {
+        mensagemStatus = '✅ Não houve salto.';
+        corStatus = 'green';
+      } else {
+        const maiorSalto = Math.max(...saltosValidos.map(s => s.diferencaSegundos));
+        const minutos = Math.floor(maiorSalto / 60);
+        const segundos = maiorSalto % 60;
+        mensagemStatus = `⚠️ Houve salto de ${minutos}min ${segundos}seg.`;
+        corStatus = 'orange';
+        problemasEncontrados = true;
+      }
+
+      resultado.innerHTML = `<p style="color:${corStatus}; font-weight:bold; font-size:1.1em;">${mensagemStatus}</p>`;
 
       if (resposta.debugText && resposta.debugText.length > 0) {
+        const keys = Object.keys(resposta.debugText[0]);
+        let debugHTML = `<div class="tabela-wrapper"><table class="tabela-debug"><thead><tr>`;
+        for (const key of keys) debugHTML += `<th>${key}</th>`;
+        debugHTML += `</tr></thead><tbody>`;
+        for (const row of resposta.debugText) {
+          debugHTML += `<tr>`;
+          for (const key of keys) debugHTML += `<td>${row[key]}</td>`;
+          debugHTML += `</tr>`;
+        }
+        debugHTML += `</tbody></table></div>`;
+        resultado.innerHTML += debugHTML;
+      }
+
+      if (resposta.houveRegressao) {
         resultado.innerHTML += `
-          <div style="background-color: #f9f9f9; border-left: 4px solid #00aaff; padding: 10px; border-radius: 5px; margin-bottom: 15px;">
-            <h4 style="margin: 0 0 10px 0; font-size: 14px; color: #007bff;">Dados de Diagnóstico:</h4>
-            <pre style="white-space: pre-wrap; word-wrap: break-word; font-size: 12px; color: #333;">${JSON.stringify(resposta.debugText, null, 2)}</pre>
+          <div class="tabela-wrapper">
+            <table class="tabela-aviso">
+              <thead><tr><th>Possível Problema</th></tr></thead>
+              <tbody><tr><td>⚠️ Possivelmente o coletor trocou de horário durante a aula.</td></tr></tbody>
+            </table>
           </div>
         `;
+      }
+
+      if (saltosValidos.length > 0) {
+        let saltosHTML = `<div class="tabela-wrapper"><table class="tabela-saltos"><thead>
+          <tr><th>Anterior</th><th>Atual</th><th>Diferença</th></tr>
+          </thead><tbody>`;
+        for (const salto of saltosValidos) {
+          const minutos = Math.floor(salto.diferencaSegundos / 60);
+          const segundos = salto.diferencaSegundos % 60;
+          saltosHTML += `<tr>
+            <td>${salto.anterior}</td>
+            <td>${salto.atual}</td>
+            <td>${minutos}min ${segundos}seg</td>
+          </tr>`;
+        }
+        saltosHTML += `</tbody></table></div>`;
+        resultado.innerHTML += saltosHTML;
       }
 
       if (resposta.sqlException) {
         problemasEncontrados = true;
-        resultado.innerHTML += `
-          <div style="background-color: #ffe6e6; border-left: 4px solid #ff4d4d; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-            <p style="margin:0; font-weight: bold; color: #ff0000;">SQL Exception detectada:</p>
-            <pre style="white-space: pre-wrap; word-wrap: break-word; font-size: 12px; color: #800000;">${resposta.sqlException}</pre>
+        sqlExceptionHTML = `
+          <div class="tabela-wrapper">
+            <table class="tabela-erro">
+              <thead><tr><th>SQL Exception detectada</th></tr></thead>
+              <tbody><tr><td>${resposta.sqlException}</td></tr></tbody>
+            </table>
           </div>
         `;
-      }
-
-      if (resposta.houveRegressao) {
-        problemasEncontrados = true;
-        resultado.innerHTML += `
-          <div style="background-color: #fff4e6; border-left: 4px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-            <p style="margin:0; font-weight: bold; color: #ff8000;">⚠️ Possivelmente o coletor trocou de horário durante a aula.</p>
-          </div>
-        `;
-      }
-
-      const saltosValidos = resposta.saltos.filter(s => !isNaN(s.diferencaSegundos));
-      if (saltosValidos.length > 0) {
-        problemasEncontrados = true;
-        let html = `
-          <div style="background-color: #fff4e6; border-left: 4px solid #ffa500; padding: 10px; border-radius: 5px; margin-bottom: 10px;">
-            <p style="margin:0; font-weight: bold; color: #ff8000;">⚠️ Saltos de tempo detectados:</p>
-            <ul style="margin:5px 0 0 20px; padding:0;">
-        `;
-        for (const salto of saltosValidos) {
-          html += `<li>De ${salto.anterior} para ${salto.atual} — ${salto.diferencaFormatada || Math.round(salto.diferencaSegundos) + ' segundos'}</li>`;
-        }
-        html += '</ul></div>';
-        resultado.innerHTML += html;
       }
 
       if (!problemasEncontrados) {
         resultado.innerHTML += `
-          <div style="background-color: #e6ffed; border-left: 4px solid #28a745; padding: 10px; border-radius: 5px;">
-            <p style="margin:0; font-weight: bold; color: #19692c;">✅ Nenhuma inconsistência encontrada.</p>
+          <div class="tabela-wrapper">
+            <table class="tabela-sucesso">
+              <thead><tr><th>Resultado</th></tr></thead>
+              <tbody><tr><td>✅ Nenhuma inconsistência encontrada.</td></tr></tbody>
+            </table>
           </div>
         `;
       }
 
+      if (sqlExceptionHTML) resultado.innerHTML += sqlExceptionHTML;
+
     } catch (error) {
       resultado.innerHTML = `
-        <div style="background-color: #ffe6e6; border-left: 4px solid #ff4d4d; padding: 10px; border-radius: 5px;">
-          <p style="margin:0; font-weight: bold; color: #ff0000;">Erro ao analisar:</p>
-          <pre style="white-space: pre-wrap; word-wrap: break-word; font-size: 12px; color: #800000;">${error.message}</pre>
+        <div class="tabela-wrapper">
+          <table class="tabela-erro">
+            <thead><tr><th>Erro ao analisar</th></tr></thead>
+            <tbody><tr><td>${error.message}</td></tr></tbody>
+          </table>
         </div>
       `;
     }
   });
 });
+
+
+

@@ -265,3 +265,71 @@ button:hover {
   margin-top: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+
+.tabela-wrapper {
+  margin-bottom: 15px;
+  width: 100%;
+  overflow-x: auto; 
+}
+
+.tabela-wrapper table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.tabela-wrapper th {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.tabela-wrapper td {
+  padding: 6px;
+  border: 1px solid #ddd;
+  word-wrap: break-word;
+}
+
+.tabela-saltos thead { background-color: #ffa500; color: #fff; }
+.tabela-debug thead { background-color: #00aaff; color: #fff; }
+.tabela-aviso thead { background-color: #ffb84d; color: #fff; }
+.tabela-sucesso thead { background-color: #28a745; color: #fff; }
+.tabela-erro thead { background-color: #ff4d4d; color: #fff; }
+
+.tabela-saltos tbody td { background-color: #fffaf0; }
+.tabela-debug tbody td { background-color: #f0f9ff; }
+.tabela-aviso tbody td { background-color: #fff4e6; }
+.tabela-sucesso tbody td { background-color: #e6ffed; }
+.tabela-erro tbody td { background-color: #ffe6e6; }
+
+.tabela-erro td { color: #800000; font-weight: bold; }
+.tabela-aviso td { color: #ff8000; font-weight: bold; }
+
+.analisando {
+  color: #007bff;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+@media (max-width: 600px) {
+  .tabela-wrapper table, .tabela-wrapper thead, .tabela-wrapper tbody, .tabela-wrapper th, .tabela-wrapper td, .tabela-wrapper tr {
+    display: block;
+  }
+  .tabela-wrapper thead tr { display: none; }
+  .tabela-wrapper td {
+    padding-left: 50%;
+    position: relative;
+  }
+  .tabela-wrapper td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 6px;
+    font-weight: bold;
+  }
+}
+
