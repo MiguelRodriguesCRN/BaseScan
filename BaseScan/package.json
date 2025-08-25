@@ -3,10 +3,31 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder --win portable"
+  },
+  "author": "Miguel Rodrigues, Cassia Gomes, Lara do Carmo, Lucas Viana",
+  "license": "MIT",
+  "build": {
+    "appId": "com.basescan.app",
+    "productName": "BaseScan",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/.cache/**"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "/src/icon/favicon1.ico"
+
+    }
   },
   "devDependencies": {
-    "electron": "^25.3.0"
+    "electron": "^25.3.0",
+    "electron-builder": "^26.0.12"
   },
   "dependencies": {
     "@journeyapps/sqlcipher": "^5.3.1"
