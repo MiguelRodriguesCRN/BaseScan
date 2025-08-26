@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,6 +11,7 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
   </style>
 </head>
+
 <body>
   <div class="app-container">
     <!-- Sidebar -->
@@ -25,7 +27,7 @@
           <li onclick="navegar('logs')">
             <span class="icon">📄</span>
             <span class="text">Logs de Exame</span>
-        </li>
+          </li>
         </ul>
 
       </nav>
@@ -46,27 +48,30 @@
           <button id="btnAnalisarSaltos">🔍 Analisar Saltos</button>
         </div>
         <div id="caminhoArquivo">Nenhum arquivo selecionado.</div>
+        <div id="error-message" class="error-message"></div>
       </section>
 
       <div id="resultadoSaltos">
         <div class="tabela-wrapper" style="display: none;">
           <table class="tabela-aulas">
-      <tbody id="tabelaSaltosBody">
-        <!-- Dados serão inseridos dinamicamente -->
-      </tbody>
-    </table>
-  </div>
+            <tbody id="tabelaSaltosBody">
+              <!-- Dados serão inseridos dinamicamente -->
+            </tbody>
+          </table>
+        </div>
     </main>
   </div>
 
-    <!-- Painel de ajuda -->
+  <!-- Painel de ajuda -->
   <div id="ajuda-container">
     <button id="btnFechar">&times;</button>
 
     <div id="pagina1" class="pagina-ajuda">
       <h3>Ajuda na análise</h3>
-      <p>Para realizar a análise, selecione o arquivo .db coletado, insira o "LessonOID" da aula que está sendo analisada e clique em "Analisar Salto".</p>
-      <p>Caso possua salto de 5 a 10 minutos, abra um chamado com todas as evidências da aula e encaminhe ao N2 responsável pelo estado.</p>
+      <p>Para realizar a análise, selecione o arquivo .db coletado, insira o "LessonOID" da aula que está sendo
+        analisada e clique em "Analisar Salto".</p>
+      <p>Caso possua salto de 5 a 10 minutos, abra um chamado com todas as evidências da aula e encaminhe ao N2
+        responsável pelo estado.</p>
       <button id="proxima1">Próximo &rarr;</button>
     </div>
 
@@ -78,7 +83,7 @@
     </div>
   </div>
 
-      <div class="sidebar-voltar">
+  <div class="sidebar-voltar">
     <button id="voltar-sidebar">Voltar</button>
   </div>
 
@@ -96,4 +101,5 @@
     }
   </script>
 </body>
+
 </html>

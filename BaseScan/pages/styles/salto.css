@@ -109,7 +109,7 @@ header h1 {
   background-color: white;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   max-width: 700px;
 }
 
@@ -159,7 +159,7 @@ button:hover {
   background-color: white;
   border-radius: 12px;
   padding: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 #ajuda-container {
@@ -203,7 +203,8 @@ button:hover {
   justify-content: center;
 }
 
-#voltar1, #proxima1 {
+#voltar1,
+#proxima1 {
   background-color: #1e293b;
   color: white;
   position: relative;
@@ -269,7 +270,7 @@ button:hover {
 .tabela-wrapper {
   margin-bottom: 15px;
   width: 100%;
-  overflow-x: auto; 
+  overflow-x: auto;
 }
 
 .tabela-wrapper table {
@@ -293,20 +294,60 @@ button:hover {
   word-wrap: break-word;
 }
 
-.tabela-saltos thead { background-color: #ffa500; color: #fff; }
-.tabela-debug thead { background-color: #00aaff; color: #fff; }
-.tabela-aviso thead { background-color: #ffb84d; color: #fff; }
-.tabela-sucesso thead { background-color: #28a745; color: #fff; }
-.tabela-erro thead { background-color: #ff4d4d; color: #fff; }
+.tabela-saltos thead {
+  background-color: #ffa500;
+  color: #fff;
+}
 
-.tabela-saltos tbody td { background-color: #fffaf0; }
-.tabela-debug tbody td { background-color: #f0f9ff; }
-.tabela-aviso tbody td { background-color: #fff4e6; }
-.tabela-sucesso tbody td { background-color: #e6ffed; }
-.tabela-erro tbody td { background-color: #ffe6e6; }
+.tabela-debug thead {
+  background-color: #00aaff;
+  color: #fff;
+}
 
-.tabela-erro td { color: #800000; font-weight: bold; }
-.tabela-aviso td { color: #ff8000; font-weight: bold; }
+.tabela-aviso thead {
+  background-color: #ffb84d;
+  color: #fff;
+}
+
+.tabela-sucesso thead {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.tabela-erro thead {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+.tabela-saltos tbody td {
+  background-color: #fffaf0;
+}
+
+.tabela-debug tbody td {
+  background-color: #f0f9ff;
+}
+
+.tabela-aviso tbody td {
+  background-color: #fff4e6;
+}
+
+.tabela-sucesso tbody td {
+  background-color: #e6ffed;
+}
+
+.tabela-erro tbody td {
+  background-color: #ffe6e6;
+}
+
+.tabela-erro td {
+  color: #800000;
+  font-weight: bold;
+}
+
+.tabela-aviso td {
+  color: #ff8000;
+  font-weight: bold;
+}
 
 .analisando {
   color: #007bff;
@@ -314,15 +355,32 @@ button:hover {
   margin: 10px 0;
 }
 
+.error-message {
+  color: #ef4444;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
 @media (max-width: 600px) {
-  .tabela-wrapper table, .tabela-wrapper thead, .tabela-wrapper tbody, .tabela-wrapper th, .tabela-wrapper td, .tabela-wrapper tr {
+
+  .tabela-wrapper table,
+  .tabela-wrapper thead,
+  .tabela-wrapper tbody,
+  .tabela-wrapper th,
+  .tabela-wrapper td,
+  .tabela-wrapper tr {
     display: block;
   }
-  .tabela-wrapper thead tr { display: none; }
+
+  .tabela-wrapper thead tr {
+    display: none;
+  }
+
   .tabela-wrapper td {
     padding-left: 50%;
     position: relative;
   }
+
   .tabela-wrapper td::before {
     content: attr(data-label);
     position: absolute;
@@ -332,4 +390,3 @@ button:hover {
     font-weight: bold;
   }
 }
-

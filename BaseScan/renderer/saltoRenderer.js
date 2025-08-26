@@ -5,6 +5,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const btnSelecionar = document.getElementById('btnSelecionar');
   const caminhoArquivo = document.getElementById('caminhoArquivo');
   const voltarSidebar = document.getElementById('voltar-sidebar');
+  const errorMessage = document.getElementById('error-message'); // Elemento para exibir o erro
 
   const btnAjuda = document.getElementById("btnAjuda");
   const ajudaContainer = document.getElementById("ajuda-container");
@@ -35,6 +36,7 @@ window.addEventListener('DOMContentLoaded', () => {
   let arquivoSelecionado = null;
 
   btnSelecionar.addEventListener('click', async () => {
+    if (errorMessage) errorMessage.textContent = ''; // Limpa o erro ao selecionar novo arquivo
     const file = await window.electronAPI.selecionarArquivo();
     if (file) {
       arquivoSelecionado = file;
@@ -50,8 +52,15 @@ window.addEventListener('DOMContentLoaded', () => {
 
   btnAnalisarSaltos.addEventListener('click', async () => {
     const lessonOid = inputLessonOid.value.trim();
-    if (!lessonOid || !arquivoSelecionado) {
-      alert('Preencha o LessonOID e selecione o arquivo.');
+    if (errorMessage) errorMessage.textContent = ''; // Limpa erros anteriores
+
+    if (!arquivoSelecionado) {
+      if (errorMessage) errorMessage.textContent = 'Por favor, selecione o arquivo .db primeiro.';
+      return;
+    }
+
+    if (!lessonOid) {
+      if (errorMessage) errorMessage.textContent = 'Preencha o LessonOID para continuar.';
       return;
     }
 
@@ -186,6 +195,3 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
-
-
-
