@@ -361,6 +361,80 @@ button:hover {
   margin-top: 1rem;
 }
 
+.total-segmentos {
+  color: #007bff;
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+/* Estilos para o Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #323232;
+  /* Um cinza mais escuro */
+  color: white;
+  padding: 18px 25px;
+  /* Mais padding */
+  border-radius: 10px;
+  /* Cantos mais arredondados */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  /* Sombra mais pronunciada */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  /* Transição mais suave e com "bounce" */
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Espaço entre ícone, mensagem e botão */
+}
+
+.toast-icon {
+  font-size: 24px;
+  color: #a7d9ff;
+  /* Cor para o ícone */
+}
+
+.toast-message {
+  font-size: 15px;
+  line-height: 1.4;
+  flex-grow: 1;
+  /* Para a mensagem ocupar o espaço disponível */
+}
+
+.toast-close-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  /* Cor do X de fechar */
+  font-size: 24px;
+  /* Tamanho maior para o X */
+  cursor: pointer;
+  padding: 0 5px;
+  transition: color 0.2s ease;
+}
+
+.toast-close-btn:hover {
+  color: white;
+}
+
+
 @media (max-width: 600px) {
 
   .tabela-wrapper table,

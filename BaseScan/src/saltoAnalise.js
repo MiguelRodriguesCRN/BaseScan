@@ -23,6 +23,13 @@ function formatInstant(instant) {
   }
 }
 
+function formatTime(date) {
+  const hh = String(date.getHours()).padStart(2, '0');
+  const mi = String(date.getMinutes()).padStart(2, '0');
+  const ss = String(date.getSeconds()).padStart(2, '0');
+  return `${hh}:${mi}:${ss}`;
+}
+
 function segundosParaTempo(segundos) {
   if (typeof segundos !== 'number' || isNaN(segundos)) return '0s';
   const horas = Math.floor(segundos / 3600);
@@ -44,6 +51,8 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
       saltos: [],
       sqlException: null,
       sqlExceptions: [],
+      totalSegmentos: 0,
+      segmentosDetalhes: [],
     };
 
     const db = new sqlite3.Database(dbPath, sqlite3.OPEN_READONLY, (err) => {
@@ -87,6 +96,24 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
 
               const out = { ...resultBase, oidEncontrado: true };
 
+              if (rows.length > 1) {
+                const inicioAula = new Date(formatInstant(rows[0].Instant));
+                const fimAula = new Date(formatInstant(rows[rows.length - 1].Instant));
+                const duracaoTotalSegundos = (fimAula.getTime() - inicioAula.getTime()) / 1000;
+                const duracaoTotalMinutos = duracaoTotalSegundos / 60;
+                out.totalSegmentos = Math.floor(duracaoTotalMinutos / 50);
+
+                for (let i = 0; i < out.totalSegmentos; i++) {
+                  const inicioSegmento = new Date(inicioAula.getTime() + i * 50 * 60 * 1000);
+                  const fimSegmento = new Date(inicioSegmento.getTime() + 50 * 60 * 1000);
+                  out.segmentosDetalhes.push({
+                    segmento: i + 1,
+                    horarioInicial: formatTime(inicioSegmento),
+                    horarioFinal: formatTime(fimSegmento),
+                  });
+                }
+              }
+
               const excRegex = /(sqliteexception|sqlexception)/i;
 
               for (const row of rows) {
@@ -114,11 +141,16 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
                 const diffSegundos = (atu.getTime() - ant.getTime()) / 1000;
 
                 if (diffSegundos >= 300) {
+                  const inicioAula = new Date(formatInstant(rows[0].Instant));
+                  const tempoDesdeInicio = (ant.getTime() - inicioAula.getTime()) / 1000;
+                  const segmento = Math.floor(tempoDesdeInicio / 3000) + 1;
+
                   out.saltos.push({
                     anterior: rows[i - 1].Instant,
                     atual: rows[i].Instant,
                     diferencaSegundos: diffSegundos,
                     diferencaFormatada: segundosParaTempo(diffSegundos),
+                    segmento: segmento
                   });
                 }
               }

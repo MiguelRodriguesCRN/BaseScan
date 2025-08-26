@@ -15,6 +15,27 @@ window.addEventListener('DOMContentLoaded', () => {
   const proxima1 = document.getElementById("proxima1");
   const voltar1 = document.getElementById("voltar1");
 
+  const toast = document.getElementById('toast-notification');
+  const toastCloseBtn = document.querySelector('.toast-close-btn');
+
+  let toastTimeout;
+
+  function showToast() {
+    clearTimeout(toastTimeout);
+    toast.classList.add('show');
+    toastTimeout = setTimeout(() => {
+      toast.classList.remove('show');
+    }, 7000); // O toast desaparecerá após 7 segundos
+  }
+
+  if (toastCloseBtn) {
+    toastCloseBtn.addEventListener('click', () => {
+      clearTimeout(toastTimeout);
+      toast.classList.remove('show');
+    });
+  }
+
+
   btnAjuda.addEventListener("click", () => {
     ajudaContainer.classList.add("ativo");
     pagina1.style.display = "block";
@@ -72,6 +93,7 @@ window.addEventListener('DOMContentLoaded', () => {
         senha: '123Mudar',
         lessonOid
       });
+      showToast();
 
       if (!resposta.oidEncontrado) {
         resultado.innerHTML = `
@@ -116,6 +138,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
       resultado.innerHTML = `<p style="color:${corStatus}; font-weight:bold; font-size:1.1em;">${mensagemStatus}</p>`;
 
+      if (resposta.segmentosDetalhes && resposta.segmentosDetalhes.length > 0) {
+        let segmentosHTML = `<div class="tabela-wrapper"><table class="tabela-debug"><thead>
+          <tr><th>Segmento</th><th>Horário Inicial</th><th>Horário Final</th></tr>
+          </thead><tbody>`;
+        for (const segmento of resposta.segmentosDetalhes) {
+          segmentosHTML += `<tr>
+            <td>${segmento.segmento}</td>
+            <td>${segmento.horarioInicial}</td>
+            <td>${segmento.horarioFinal}</td>
+          </tr>`;
+        }
+        segmentosHTML += `</tbody></table></div>`;
+        resultado.innerHTML += segmentosHTML;
+      }
+
+
       if (resposta.debugText && resposta.debugText.length > 0) {
         const keys = Object.keys(resposta.debugText[0]);
         let debugHTML = `<div class="tabela-wrapper"><table class="tabela-debug"><thead><tr>`;
@@ -143,7 +181,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (saltosValidos.length > 0) {
         let saltosHTML = `<div class="tabela-wrapper"><table class="tabela-saltos"><thead>
-          <tr><th>Anterior</th><th>Atual</th><th>Diferença</th></tr>
+          <tr><th>Anterior</th><th>Atual</th><th>Diferença</th><th>Segmento</th></tr>
           </thead><tbody>`;
         for (const salto of saltosValidos) {
           const minutos = Math.floor(salto.diferencaSegundos / 60);
@@ -152,6 +190,7 @@ window.addEventListener('DOMContentLoaded', () => {
             <td>${salto.anterior}</td>
             <td>${salto.atual}</td>
             <td>${minutos}min ${segundos}seg</td>
+            <td>${salto.segmento}</td>
           </tr>`;
         }
         saltosHTML += `</tbody></table></div>`;
@@ -184,6 +223,7 @@ window.addEventListener('DOMContentLoaded', () => {
       if (sqlExceptionHTML) resultado.innerHTML += sqlExceptionHTML;
 
     } catch (error) {
+      showToast();
       resultado.innerHTML = `
         <div class="tabela-wrapper">
           <table class="tabela-erro">

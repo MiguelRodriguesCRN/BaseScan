@@ -10,11 +10,11 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
   </style>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
   <div class="app-container">
-    <!-- Sidebar -->
     <aside class="sidebar collapsed">
       <div class="toggle-btn" id="toggleSidebar">☰</div>
       <nav class="menu">
@@ -33,7 +33,6 @@
       </nav>
     </aside>
 
-    <!-- Conteúdo principal -->
     <main class="main-content">
       <header>
         <h1>Análise de Saltos de Tempo</h1>
@@ -55,14 +54,12 @@
         <div class="tabela-wrapper" style="display: none;">
           <table class="tabela-aulas">
             <tbody id="tabelaSaltosBody">
-              <!-- Dados serão inseridos dinamicamente -->
             </tbody>
           </table>
         </div>
     </main>
   </div>
 
-  <!-- Painel de ajuda -->
   <div id="ajuda-container">
     <button id="btnFechar">&times;</button>
 
@@ -86,6 +83,15 @@
   <div class="sidebar-voltar">
     <button id="voltar-sidebar">Voltar</button>
   </div>
+
+  <div id="toast-notification" class="toast">
+    <div class="toast-content">
+      <span class="material-icons toast-icon">info</span> <span class="toast-message">Esta ferramenta foi desenvolvida
+        para apoiar as análises, mas é fundamental que o N1 também realize sua própria avaliação.</span>
+      <button class="toast-close-btn">&times;</button>
+    </div>
+  </div>
+
 
   <script src="../renderer/saltoRenderer.js"></script>
   <script>
