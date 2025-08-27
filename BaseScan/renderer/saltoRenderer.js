@@ -139,19 +139,27 @@ window.addEventListener('DOMContentLoaded', () => {
       resultado.innerHTML = `<p style="color:${corStatus}; font-weight:bold; font-size:1.1em;">${mensagemStatus}</p>`;
 
       if (resposta.segmentosDetalhes && resposta.segmentosDetalhes.length > 0) {
+        
+        resultado.innerHTML += `
+    <p style="font-weight:bold; margin:10px 0;">
+      📘 Quantidade de aulas totais: ${resposta.totalSegmentos}
+    </p>
+  `;
+
         let segmentosHTML = `<div class="tabela-wrapper"><table class="tabela-debug"><thead>
-          <tr><th>Segmento</th><th>Horário Inicial</th><th>Horário Final</th></tr>
-          </thead><tbody>`;
+    <tr><th>Segmento</th><th>Horário Inicial</th><th>Horário Final</th></tr>
+    </thead><tbody>`;
         for (const segmento of resposta.segmentosDetalhes) {
           segmentosHTML += `<tr>
-            <td>${segmento.segmento}</td>
-            <td>${segmento.horarioInicial}</td>
-            <td>${segmento.horarioFinal}</td>
-          </tr>`;
+      <td>${segmento.segmento}</td>
+      <td>${segmento.horarioInicial}</td>
+      <td>${segmento.horarioFinal}</td>
+    </tr>`;
         }
         segmentosHTML += `</tbody></table></div>`;
         resultado.innerHTML += segmentosHTML;
       }
+
 
 
       if (resposta.debugText && resposta.debugText.length > 0) {
