@@ -8,7 +8,7 @@
   <title>Análise de Saltos</title>
   <link rel="stylesheet" href="styles/salto.css" />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Fira+Sans:wght@400;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
   </style>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -19,15 +19,14 @@
       <div class="toggle-btn" id="toggleSidebar">☰</div>
       <nav class="menu">
 
+        <!-- sidebar -->
         <ul>
-          <li onclick="navegar('aulas')">
-            <span class="icon">📂</span>
-            <span class="text">Aulas Presas</span>
-          </li>
-          <li onclick="navegar('logs')">
+          <li id="botaoDashboardSidebar"><span class="icon">🏠</span><span class="text">Dashboard</span></li>
+          <li onclick="navegar('aulas')"><span class="icon">📂</span><span class="text">Aulas Presas</span></li>
+          <!-- <li onclick="navegar('logs')">
             <span class="icon">📄</span>
             <span class="text">Logs de Exame</span>
-          </li>
+          </li> Comentado pois nao iremos usar análise de logs nessa versao-->
         </ul>
 
       </nav>
@@ -36,7 +35,7 @@
     <main class="main-content">
       <header>
         <h1>Análise de Saltos de Tempo</h1>
-        <p class="descricao">Verifique inconsistências de tempo nas aulas com base no LessonOID fornecido.</p>
+        <p class="descricao">Verifica inconsistências de tempo nas aulas com base no LessonOID fornecido.</p>
         <button id="btnAjuda">❓ Ajuda com a análise</button>
       </header>
 
@@ -80,9 +79,6 @@
     </div>
   </div>
 
-  <div class="sidebar-voltar">
-    <button id="voltar-sidebar">Voltar</button>
-  </div>
 
   <div id="toast-notification" class="toast">
     <div class="toast-content">

@@ -3,7 +3,7 @@ body {
   background-color: #f9fafb;
   margin: 0;
   display: flex;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .app-container {
@@ -11,11 +11,13 @@ body {
   width: 100%;
 }
 
+/* Sidebar */
 .sidebar {
   width: 220px;
-  background-color: rgb(5, 92, 168);
+  background-color: #1e293b;
   color: white;
   transition: width 0.3s ease;
+  height: 100vh; /* Faz a sidebar acompanhar a altura da tela */
 }
 
 .sidebar.collapsed {
@@ -27,33 +29,13 @@ body {
   pointer-events: none;
 }
 
-.sidebar-voltar {
-  position: fixed;
-  bottom: 24px;
-  left: 90px;
-  z-index: 100;
-  opacity: 1;
-  transition: opacity 0.1s ease-in-out;
-  pointer-events: auto;
-}
-
-#voltar-sidebar {
-  position: relative;
-  background-color: rgb(3, 76, 139);
-  color: white;
-  transition: transform 0.1s ease;
-}
-
-#voltar-sidebar:hover {
-  background-color: rgb(2, 60, 112);
-}
-
+/* botao ☰ */
 .toggle-btn {
   font-size: 1.5rem;
   text-align: center;
   cursor: pointer;
   padding: 10px 0;
-  background-color: rgb(3, 76, 139);
+  background-color: #0f172a;
   margin-top: 15px;
 }
 
@@ -73,11 +55,15 @@ body {
 }
 
 .menu ul li:hover {
-  background-color: rgba(3, 76, 139, 0.8);
+  background-color: #334155;
 }
 
 .menu .icon {
-  margin-right: 12px;
+  font-size: 1.2rem;
+  width: 30px;
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
 }
 
 .menu .text {
@@ -92,17 +78,6 @@ body {
 .main-content {
   flex-grow: 1;
   padding: 32px;
-}
-
-header h1 {
-  font-size: 24px;
-  margin-bottom: 8px;
-}
-
-.descricao {
-  font-size: 14px;
-  color: #4b5563;
-  margin-bottom: 24px;
 }
 
 .card {
@@ -374,14 +349,10 @@ button:hover {
   bottom: 20px;
   right: 20px;
   background-color: #323232;
-  /* Um cinza mais escuro */
   color: white;
   padding: 18px 25px;
-  /* Mais padding */
   border-radius: 10px;
-  /* Cantos mais arredondados */
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  /* Sombra mais pronunciada */
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -389,7 +360,6 @@ button:hover {
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-  /* Transição mais suave e com "bounce" */
 }
 
 .toast.show {
@@ -402,29 +372,24 @@ button:hover {
   display: flex;
   align-items: center;
   gap: 12px;
-  /* Espaço entre ícone, mensagem e botão */
 }
 
 .toast-icon {
   font-size: 24px;
   color: #a7d9ff;
-  /* Cor para o ícone */
 }
 
 .toast-message {
   font-size: 15px;
   line-height: 1.4;
   flex-grow: 1;
-  /* Para a mensagem ocupar o espaço disponível */
 }
 
 .toast-close-btn {
   background: none;
   border: none;
   color: #ccc;
-  /* Cor do X de fechar */
   font-size: 24px;
-  /* Tamanho maior para o X */
   cursor: pointer;
   padding: 0 5px;
   transition: color 0.2s ease;

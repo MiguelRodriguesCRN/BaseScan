@@ -5,11 +5,12 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Consulta SQLCipher</title>
+  <title>Análise de Aulas Pendentes</title>
   <link rel="stylesheet" href="styles/tela-aulas.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Alumni+Sans+SC:ital,wght@0,100..900;1,100..900&family=Fira+Sans:wght@400;600&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Sofia+Sans+Semi+Condensed:ital,wght@0,1..1000;1,1..1000&display=swap');
   </style>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -19,8 +20,10 @@
       <div class="toggle-btn" id="toggleSidebar">☰</div>
       <nav class="menu">
         <ul>
-          <li id="encaminharExame"><span class="icon">📄</span><span class="text">Logs de Exame</span></li>
-          <li id="encaminharDesligamento"><span class="icon">⏱</span><span class="text">Desligamento</span></li>
+          <!-- //Navegação desativada pois não teremos análise de logs nesta versão -->
+          <li id="botaoDashboardSidebar"><span class="icon">🏠</span><span class="text">Dashboard</span></li>
+          <li id="encaminharDesligamento"><span class="icon">⏰</span><span class="text">Desligamento</span></li>
+          <!-- <li id="encaminharExame"><span class="icon">📄</span><span class="text">Logs de Exame</span></li> -->
           <!-- Outras Funcionalidades são colocadas aqui -->
         </ul>
       </nav>
@@ -29,8 +32,8 @@
     <!-- Conteúdo principal -->
     <main class="main-content">
       <header>
-        <h1>Consulta de Aulas Presas</h1>
-        <p class="descricao">Verifique se existem aulas pendentes de sincronização na base coletada.</p>
+        <h1>Consulta de Aulas Pendentes</h1>
+        <p class="descricao">Verifica se existem aulas pendentes de sincronização na base coletada.</p>
         <button id="btnAjuda">❓ Ajuda com a análise</button>
       </header>
 
@@ -52,9 +55,9 @@
         <span class="mensagem">Nenhuma aula pendente.</span>
       </div>
 
-      <div class="button-section">
+      <!-- <div class="button-section">
         <button id="voltar-sidebar">Voltar</button>
-      </div>
+      </div> -->
     </main>
 
     <!-- Painel de ajuda -->

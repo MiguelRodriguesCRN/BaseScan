@@ -4,8 +4,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const resultado = document.getElementById('resultadoSaltos');
   const btnSelecionar = document.getElementById('btnSelecionar');
   const caminhoArquivo = document.getElementById('caminhoArquivo');
-  const voltarSidebar = document.getElementById('voltar-sidebar');
   const errorMessage = document.getElementById('error-message'); // Elemento para exibir o erro
+  const botaoDashboardSidebar = document.getElementById('botaoDashboardSidebar');
 
   const btnAjuda = document.getElementById("btnAjuda");
   const ajudaContainer = document.getElementById("ajuda-container");
@@ -15,6 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const proxima1 = document.getElementById("proxima1");
   const voltar1 = document.getElementById("voltar1");
 
+  
   const toast = document.getElementById('toast-notification');
   const toastCloseBtn = document.querySelector('.toast-close-btn');
 
@@ -52,7 +53,9 @@ window.addEventListener('DOMContentLoaded', () => {
     pagina1.style.display = "block";
   });
 
-  voltarSidebar.addEventListener('click', () => window.electronAPI.abrirTela('inicio'));
+  botaoDashboardSidebar.addEventListener('click', () => {
+    window.electronAPI.abrirTela('inicio');
+  });
 
   let arquivoSelecionado = null;
 

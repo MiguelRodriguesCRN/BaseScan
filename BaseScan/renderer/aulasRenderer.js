@@ -16,6 +16,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const voltarSidebar = document.getElementById('voltar-sidebar');
   const encaminharDesligamento = document.getElementById('encaminharDesligamento');
   const encaminharExame = document.getElementById('encaminharExame');
+  const botaoDashboardSidebar = document.getElementById('botaoDashboardSidebar');
 
   btnAjuda.addEventListener('click', () => {
     ajudaContainer.classList.add('ativo');
@@ -35,17 +36,22 @@ window.addEventListener('DOMContentLoaded', () => {
     pagina1.style.display = 'block';
   });
 
-  voltarSidebar.addEventListener('click', () => {
+  // voltarSidebar.addEventListener('click', () => {
+  //   window.electronAPI.abrirTela('inicio');
+  // }); comentado pois abandonamos o botao de voltar
+
+  encaminharDesligamento.addEventListener('click', () => {
+    window.electronAPI.abrirTela('salto'); // Pega a pagina salto.html
+  });
+
+  botaoDashboardSidebar.addEventListener('click', () => {
     window.electronAPI.abrirTela('inicio');
   });
 
-  encaminharDesligamento.addEventListener('click', () => {
-    window.electronAPI.abrirTela('desligamento');
-  });
-
-  encaminharExame.addEventListener('click', () => {
-    window.electronAPI.abrirTela('logs');
-  });
+  //Função desativada pois não teremos análise de logs nesta versão
+  // encaminharExame.addEventListener('click', () => {
+  //   window.electronAPI.abrirTela('logs');
+  // });
 
   let arquivoSelecionado = null;
 
@@ -81,9 +87,35 @@ window.addEventListener('DOMContentLoaded', () => {
         resultado.innerHTML = '';
         alertSucesso.style.display = 'flex';
       } else {
-        let html = '<div class="tabela-wrapper" id="container-tabela"><table class="tabela-aulas"><thead><tr><th>Code</th><th>IsSync</th><th>Renach</th><th>CPFCandidate</th><th>CPFInstructor</th><th>Start</th></tr></thead><tbody>';
+        let html = `
+          <div class="tabela-wrapper" id="container-tabela">
+            <table class="tabela-aulas">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>IsSync</th>
+                  <th>Renach</th>
+                  <th>CPF Candidato</th>
+                  <th>CPF Instrutor</th>
+                  <th>Inicio</th>
+                  <th>Fim</th>
+                </tr>
+              </thead>
+              <tbody>
+        `;
+        
         for (const row of rows) {
-          html += `<tr><td>${row.Code}</td><td>${row.IsSync}</td><td>${row.Renach}</td><td>${row.CPFCandidate}</td><td>${row.CPFInstructor}</td><td>${row.Start}</td></tr>`;
+          html += `
+            <tr>
+              <td>${row.Code}</td>
+              <td>${row.IsSync}</td>
+              <td>${row.Renach}</td>
+              <td>${row.CPFCandidate}</td>
+              <td>${row.CPFInstructor}</td>
+              <td>${row.Start}</td>
+              <td>${row.End}</td>
+            </tr>
+          `;
         }
         html += '</tbody></table></div>';
         resultado.innerHTML = html;
