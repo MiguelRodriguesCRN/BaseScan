@@ -102,7 +102,7 @@ body {
   background-color: white;
   border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   max-width: 700px;
 }
 
@@ -176,60 +176,8 @@ button:hover {
   max-width: 740px;
   background-color: white;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  overflow-x: auto;
-}
-
-.tabela-wrapper {
-  overflow-x: auto;
-  margin-top: 24px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  background-color: white;
-}
-
-.tabela-saltos {
-  width: 100%;
-  border-collapse: collapse;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  color: #1f2937;
-}
-
-.tabela-saltos thead {
-  background-color: #075985;
-  color: white;
-  text-align: left;
-  border: none;
-}
-
-.tabela-saltos th {
-  border: none;
-}
-
-.tabela-saltos th,
-.tabela-saltos td {
-  border: none;
-  padding: 12px 16px;
-  text-align: center;
-  font-size: 12px;
-}
-
-.tabela-saltos td {
-  white-space: nowrap;
-  border-left: 1px solid #d1d5db;
-  border-right: 1px solid #d1d5db;
-}
-
-#resultadoSaltos td:nth-child(1),
-#resultadoSaltos th:nth-child(1) {
-  max-width: 200px;
-  word-wrap: break-word;
-  white-space: normal;
-}
-
-.tabela-aulas th {
-  font-weight: 600;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 #ajuda-container {
@@ -273,7 +221,8 @@ button:hover {
   justify-content: center;
 }
 
-#voltar1, #proxima1 {
+#voltar1,
+#proxima1 {
   background-color: #1e293b;
   color: white;
   position: relative;
@@ -334,4 +283,202 @@ button:hover {
   font-size: 15px;
   margin-top: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tabela-wrapper {
+  margin-bottom: 15px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabela-wrapper table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+}
+
+.tabela-wrapper th {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word;
+}
+
+.tabela-wrapper td {
+  padding: 6px;
+  border: 1px solid #ddd;
+  word-wrap: break-word;
+}
+
+.tabela-saltos thead {
+  background-color: #ffa500;
+  color: #fff;
+}
+
+.tabela-debug thead {
+  background-color: #00aaff;
+  color: #fff;
+}
+
+.tabela-aviso thead {
+  background-color: #ffb84d;
+  color: #fff;
+}
+
+.tabela-sucesso thead {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.tabela-erro thead {
+  background-color: #ff4d4d;
+  color: #fff;
+}
+
+.tabela-saltos tbody td {
+  background-color: #fffaf0;
+}
+
+.tabela-debug tbody td {
+  background-color: #f0f9ff;
+}
+
+.tabela-aviso tbody td {
+  background-color: #fff4e6;
+}
+
+.tabela-sucesso tbody td {
+  background-color: #e6ffed;
+}
+
+.tabela-erro tbody td {
+  background-color: #ffe6e6;
+}
+
+.tabela-erro td {
+  color: #800000;
+  font-weight: bold;
+}
+
+.tabela-aviso td {
+  color: #ff8000;
+  font-weight: bold;
+}
+
+.analisando {
+  color: #007bff;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.error-message {
+  color: #ef4444;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.total-segmentos {
+  color: #007bff;
+  font-weight: bold;
+  margin: 10px 0;
+  font-size: 1.1em;
+}
+
+/* Estilos para o Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #323232;
+  /* Um cinza mais escuro */
+  color: white;
+  padding: 18px 25px;
+  /* Mais padding */
+  border-radius: 10px;
+  /* Cantos mais arredondados */
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  /* Sombra mais pronunciada */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  /* Transição mais suave e com "bounce" */
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* Espaço entre ícone, mensagem e botão */
+}
+
+.toast-icon {
+  font-size: 24px;
+  color: #a7d9ff;
+  /* Cor para o ícone */
+}
+
+.toast-message {
+  font-size: 15px;
+  line-height: 1.4;
+  flex-grow: 1;
+  /* Para a mensagem ocupar o espaço disponível */
+}
+
+.toast-close-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  /* Cor do X de fechar */
+  font-size: 24px;
+  /* Tamanho maior para o X */
+  cursor: pointer;
+  padding: 0 5px;
+  transition: color 0.2s ease;
+}
+
+.toast-close-btn:hover {
+  color: white;
+}
+
+
+@media (max-width: 600px) {
+
+  .tabela-wrapper table,
+  .tabela-wrapper thead,
+  .tabela-wrapper tbody,
+  .tabela-wrapper th,
+  .tabela-wrapper td,
+  .tabela-wrapper tr {
+    display: block;
+  }
+
+  .tabela-wrapper thead tr {
+    display: none;
+  }
+
+  .tabela-wrapper td {
+    padding-left: 50%;
+    position: relative;
+  }
+
+  .tabela-wrapper td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 45%;
+    padding-left: 6px;
+    font-weight: bold;
+  }
 }
