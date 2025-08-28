@@ -169,11 +169,6 @@ body {
   font-weight: 600;
 }
 
-#container-tabela {
-  overflow: auto;
-  max-height: 600px;
-}
-
 .alert-sucesso {
   display: none;
   align-items: center;

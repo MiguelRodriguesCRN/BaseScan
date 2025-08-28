@@ -4,11 +4,15 @@ body {
   margin: 0;
   display: flex;
   min-height: 100vh;
+  overflow-x: hidden; /* impede scroll lateral */
+  overflow-y: auto;   /* só aparece scroll vertical se realmente precisar */
 }
 
 .app-container {
   display: flex;
   width: 100%;
+  max-width: 100vw; /* evita estourar largura da tela */
+  overflow-x: hidden;
 }
 
 .sidebar {
@@ -18,30 +22,19 @@ body {
   transition: width 0.3s ease;
 }
 
-.sidebar.collapsed {
+.sidebar.collapsed  {
   width: 70px;
 }
 
-.sidebar.collapsed .sidebar-voltar {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.sidebar-voltar {
-  position: fixed;
-  bottom: 24px;
-  left: 90px;
-  z-index: 100;
-  opacity: 1;
-  transition: opacity 0.1s ease-in-out;
-  pointer-events: auto;
-}
-
 #voltar-sidebar {
-  position: relative;
+  padding: 8px 16px;
   background-color: rgb(3, 76, 139);
   color: white;
-  transition: transform 0.1s ease;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
 }
 
 #voltar-sidebar:hover {
@@ -92,11 +85,11 @@ body {
 .main-content {
   flex-grow: 1;
   padding: 32px;
-}
-
-header h1 {
-  font-size: 24px;
-  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  box-sizing: border-box; /* padding não soma à largura */
+  max-width: calc(100vw - 220px); /* ajusta largura considerando sidebar */
 }
 
 .descricao {
@@ -116,9 +109,31 @@ header h1 {
 .botoes-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   margin-bottom: 1rem;
+}
+
+.botoes-container button {
+  padding: 8px 16px; /* Padding consistente */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #333;
+  white-space: nowrap; /* Impede a quebra de texto */
+}
+
+.botoes-container input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  flex: 1; /* Permite que o campo de entrada ocupe o espaço disponível */
+}
+
+.button-section {
+  margin-top: 16px;     /* espaço do resultado */
+  display: flex;        /* alinha conteúdo */
 }
 
 button {
@@ -153,13 +168,68 @@ button:hover {
 }
 
 #resultadoSaltos {
-  margin-top: 24px;
-  font-size: 14px;
-  width: 58%;
+  padding: 10px;
+}
+
+#resultadoSaltos .tabela-wrapper {
+  position: relative;
+  max-width: 740px;
   background-color: white;
   border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow-x: auto;
+}
+
+.tabela-wrapper {
+  overflow-x: auto;
+  margin-top: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background-color: white;
+}
+
+.tabela-saltos {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  color: #1f2937;
+}
+
+.tabela-saltos thead {
+  background-color: #075985;
+  color: white;
+  text-align: left;
+  border: none;
+}
+
+.tabela-saltos th {
+  border: none;
+}
+
+.tabela-saltos th,
+.tabela-saltos td {
+  border: none;
+  padding: 12px 16px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.tabela-saltos td {
+  white-space: nowrap;
+  border-left: 1px solid #d1d5db;
+  border-right: 1px solid #d1d5db;
+}
+
+#resultadoSaltos td:nth-child(1),
+#resultadoSaltos th:nth-child(1) {
+  max-width: 200px;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.tabela-aulas th {
+  font-weight: 600;
 }
 
 #ajuda-container {

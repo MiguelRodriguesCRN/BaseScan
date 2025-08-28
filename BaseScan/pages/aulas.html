@@ -19,8 +19,15 @@
       <div class="toggle-btn" id="toggleSidebar">☰</div>
       <nav class="menu">
         <ul>
-          <li id="encaminharExame"><span class="icon">📄</span><span class="text">Logs de Exame</span></li>
-          <li id="encaminharDesligamento"><span class="icon">⏱</span><span class="text">Desligamento</span></li>
+          <li id="encaminharExame">
+            <span class="icon">📄</span>
+            <span class="text">Logs de Exame</span>
+          </li>
+          <!--<li id="encaminharDesligamento"><span class="icon">⏱</span><span class="text">Desligamento</span></li>-->
+          <li onclick="navegar('salto')">
+          <span class="icon">📴</span>
+          <span class="text">Desligamento</span>
+        </li>
           <!-- Outras Funcionalidades são colocadas aqui -->
         </ul>
       </nav>
@@ -85,7 +92,15 @@
 
     function navegar(tipo) {
       window.electronAPI.abrirTela(tipo);
-    };
+    }
+
+    document.getElementById('btnConsultar').addEventListener('click', () => {
+      const resultadoTexto = document.getElementById('resultadoTexto');
+      const alertSucesso = document.getElementById('alertSucesso');
+      // Simulação de verificação
+      resultadoTexto.value = 'Nenhuma aula pendente encontrada na base.';
+      alertSucesso.style.display = 'flex'; // Exibe o alerta de sucesso
+    });
   </script>
 </body>
 </html>

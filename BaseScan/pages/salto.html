@@ -16,18 +16,16 @@
     <aside class="sidebar collapsed">
       <div class="toggle-btn" id="toggleSidebar">☰</div>
       <nav class="menu">
-
         <ul>
           <li onclick="navegar('aulas')">
             <span class="icon">📂</span>
             <span class="text">Aulas Presas</span>
           </li>
-          <li onclick="navegar('logs')">
+          <li id="encaminharExame">
             <span class="icon">📄</span>
             <span class="text">Logs de Exame</span>
-        </li>
+          </li>
         </ul>
-
       </nav>
     </aside>
 
@@ -51,15 +49,17 @@
       <div id="resultadoSaltos">
         <div class="tabela-wrapper" style="display: none;">
           <table class="tabela-aulas">
-      <tbody id="tabelaSaltosBody">
-        <!-- Dados serão inseridos dinamicamente -->
-      </tbody>
-    </table>
-  </div>
+            <tbody id="tabelaSaltosBody"></tbody>
+          </table>
+        </div>
+      </div>
+          <div class="button-section">
+            <button id="voltar-sidebar">Voltar</button>
+          </div>
     </main>
   </div>
 
-    <!-- Painel de ajuda -->
+  <!-- Painel de ajuda -->
   <div id="ajuda-container">
     <button id="btnFechar">&times;</button>
 
@@ -76,10 +76,6 @@
       <p>Caso o arquivo não carregue, verifique se a extensão está correta ou se a base coletada está corrompida.</p>
       <button id="voltar1">&larr; Voltar</button>
     </div>
-  </div>
-
-      <div class="sidebar-voltar">
-    <button id="voltar-sidebar">Voltar</button>
   </div>
 
   <script src="../renderer/saltoRenderer.js"></script>

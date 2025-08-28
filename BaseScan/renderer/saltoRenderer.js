@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    resultado.innerHTML = 'Analisando... aguarde';
+    resultado.innerHTML = 'Analisando... aguarde  ⏳';
 
     try {
       const resposta = await window.electronAPI.analisarSaltosTempo({
@@ -72,7 +72,7 @@ window.addEventListener('DOMContentLoaded', () => {
       console.log('Resposta do backend:', JSON.stringify(resposta, null, 2)); // Para depuração
 
       if (!resposta.oidEncontrado) {
-        resultado.innerHTML = `<p style="color:orange;">⚠️ LessonOID "${lessonOid}" não encontrado na base.</p>`;
+        resultado.innerHTML = `<p style="color:orange;">⚠️ LessonOID "${lessonOid}" não encontrado na base, verifique se o OID está correto.</p>`;
         return;
       }
 
@@ -80,23 +80,42 @@ window.addEventListener('DOMContentLoaded', () => {
 
       // Exibe mensagem de regressão, se houver
       if (resposta.houveRegressao) {
-        resultado.innerHTML = '<p style="color:orange;">⚠️ Possivelmente o coletor trocou de horário durante a aula.</p>';
+        resultado.innerHTML = '<p style="color:orange;">⚠️ Localizada possível troca de horário durante a aula, encaminhe ao N2 com os damais dados para analise</p>';
       }
 
-      // Exibe saltos válidos, se houver
+      // Exibe saltos válidos, se houvera
       const saltosValidos = resposta.saltos.filter(s => !isNaN(s.diferencaSegundos));
       if (saltosValidos.length > 0) {
-        let html = '<p>⚠️ Saltos detectados:</p><ul>';
+        let html = `
+        <div class="tabela-wrapper">
+          <table class= "tabela-saltos">
+          <thead>
+          <tr>
+          <th>Anterior</th>
+          <th>Atual</th>
+          <th>Diferença em Minutos</th>
+          </tr>
+          </thead>
+          <tbody>
+        `;
+
         for (const salto of saltosValidos) {
-          html += `<li>De ${salto.anterior} para ${salto.atual} — ${Math.round(salto.diferencaSegundos)} segundos</li>`;
+          html += `
+          <tr>
+          <td>${salto.anterior}</td>
+          <td>${salto.atual}</td>
+          <td>${Math.round(salto.diferencaMinutos)} Minutos</td>
+          </tr>
+          `;
         }
-        html += '</ul>';
+
+        html += '</table>';
         resultado.innerHTML += html;
       }
 
       // Exibe mensagem de "nenhum evento" apenas se não houver regressões nem saltos
       if (!resposta.houveRegressao && saltosValidos.length === 0) {
-        resultado.innerHTML = '<p>✅ Nenhum salto de tempo ou regressão encontrado.</p>';
+        resultado.innerHTML = '<p>✅ Nenhum salto de tempo ou regressão encontrado, siga com a verificação dos demais dados das aulas</p>';
       }
     } catch (error) {
       resultado.innerHTML = `<p style="color:red;">Erro ao analisar: ${error.message}</p>`;
