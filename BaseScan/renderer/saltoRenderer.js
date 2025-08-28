@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const proxima1 = document.getElementById("proxima1");
   const voltar1 = document.getElementById("voltar1");
 
-  
+
   const toast = document.getElementById('toast-notification');
   const toastCloseBtn = document.querySelector('.toast-close-btn');
 
@@ -142,7 +142,7 @@ window.addEventListener('DOMContentLoaded', () => {
       resultado.innerHTML = `<p style="color:${corStatus}; font-weight:bold; font-size:1.1em;">${mensagemStatus}</p>`;
 
       if (resposta.segmentosDetalhes && resposta.segmentosDetalhes.length > 0) {
-        
+
         resultado.innerHTML += `
     <p style="font-weight:bold; margin:10px 0;">
       📘 Quantidade de aulas totais: ${resposta.totalSegmentos}
@@ -192,7 +192,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
       if (saltosValidos.length > 0) {
         let saltosHTML = `<div class="tabela-wrapper"><table class="tabela-saltos"><thead>
-          <tr><th>Anterior</th><th>Atual</th><th>Diferença</th><th>Segmento</th></tr>
+          <tr><th>Anterior</th><th>Atual</th><th>Diferença</th><th>Segmento Início</th><th>Segmento Fim</th></tr>
           </thead><tbody>`;
         for (const salto of saltosValidos) {
           const minutos = Math.floor(salto.diferencaSegundos / 60);
@@ -202,6 +202,7 @@ window.addEventListener('DOMContentLoaded', () => {
             <td>${salto.atual}</td>
             <td>${minutos}min ${segundos}seg</td>
             <td>${salto.segmento}</td>
+            <td>${salto.segmentoFim}</td>
           </tr>`;
         }
         saltosHTML += `</tbody></table></div>`;
