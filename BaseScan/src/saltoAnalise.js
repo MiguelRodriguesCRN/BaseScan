@@ -21,7 +21,7 @@ function formatInstant(instant) {
 
     if (Number.isNaN(d.getTime())) return null;
 
-    
+
     d.setHours(d.getHours() - 3);
 
     return d;
@@ -175,16 +175,23 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
 
                   if (diffSegundos >= 300) {
                     const inicioAula = formatInstant(rows[0].Instant);
-                    const tempoDesdeInicio =
+                    const tempoDesdeInicioAnterior =
                       (fAnt.getTime() - inicioAula.getTime()) / 1000;
-                    const segmento = Math.floor(tempoDesdeInicio / 3000) + 1;
+                    const segmentoInicio =
+                      Math.floor(tempoDesdeInicioAnterior / 3000) + 1;
+
+                    const tempoDesdeInicioAtual =
+                      (fAtu.getTime() - inicioAula.getTime()) / 1000;
+                    const segmentoFim =
+                      Math.floor(tempoDesdeInicioAtual / 3000) + 1;
 
                     out.saltos.push({
                       anterior: formatTime(fAnt),
                       atual: formatTime(fAtu),
                       diferencaSegundos: diffSegundos,
                       diferencaFormatada: segundosParaTempo(diffSegundos),
-                      segmento: segmento,
+                      segmento: segmentoInicio,
+                      segmentoFim: segmentoFim,
                     });
                   }
                 }

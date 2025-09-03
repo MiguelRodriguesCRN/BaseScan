@@ -3,7 +3,8 @@ body {
   background-color: #f9fafb;
   margin: 0;
   display: flex;
-  height: 100vh;
+  min-height: 100vh;
+  /* Garante que o corpo ocupe pelo menos a altura total da tela */
 }
 
 .app-container {
@@ -17,7 +18,7 @@ body {
   background-color: #1e293b;
   color: white;
   transition: width 0.3s ease;
-  height: 100vh; /* Faz a sidebar acompanhar a altura da tela */
+  /* A altura foi removida para permitir que a sidebar cresça com o conteúdo */
 }
 
 .sidebar.collapsed {
@@ -188,10 +189,14 @@ button:hover {
 
 .tabela-wrapper {
   overflow-x: auto;
-  margin-top: 24px;
+  margin-bottom: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  background-color: white;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+#resultadoSaltos .tabela-wrapper:last-child {
+  margin-bottom: 0;
 }
 
 .tabela-aulas {
@@ -240,12 +245,6 @@ button:hover {
   font-size: 15px;
   margin-top: 16px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.tabela-wrapper {
-  margin-bottom: 15px;
-  width: 100%;
-  overflow-x: auto;
 }
 
 .tabela-wrapper table {
