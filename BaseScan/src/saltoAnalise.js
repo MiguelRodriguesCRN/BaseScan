@@ -31,14 +31,17 @@ function formatInstant(instant) {
 }
 
 /**
- * Retorna HH:mm:ss a partir de Date
+ * Retorna dd/MM/yyyy HH:mm:ss a partir de Date
  */
-function formatTime(date) {
+function formatDateTime(date) {
   if (!(date instanceof Date) || isNaN(date)) return null;
+  const dd = String(date.getDate()).padStart(2, '0');
+  const mm = String(date.getMonth() + 1).padStart(2, '0'); // Mês começa em 0
+  const yyyy = date.getFullYear();
   const hh = String(date.getHours()).padStart(2, '0');
   const mi = String(date.getMinutes()).padStart(2, '0');
   const ss = String(date.getSeconds()).padStart(2, '0');
-  return `${hh}:${mi}:${ss}`;
+  return `${dd}/${mm}/${yyyy} ${hh}:${mi}:${ss}`;
 }
 
 function segundosParaTempo(segundos) {
@@ -59,6 +62,7 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
     const resultBase = {
       oidEncontrado: false,
       houveSalto: false,
+      houveRegressao: false,
       saltos: [],
       sqlException: null,
       sqlExceptions: [],
@@ -125,26 +129,41 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
                 }
 
                 const out = { ...resultBase, oidEncontrado: true };
+                const minutosPorSegmento = 50;
+                const segundosPorSegmento = minutosPorSegmento * 60;
 
                 if (rows.length > 1) {
                   const inicioAula = formatInstant(rows[0].Instant);
                   const fimAula = formatInstant(rows[rows.length - 1].Instant);
-                  const duracaoTotalSegundos =
-                    (fimAula.getTime() - inicioAula.getTime()) / 1000;
-                  const duracaoTotalMinutos = duracaoTotalSegundos / 60;
-                  out.totalSegmentos = Math.floor(duracaoTotalMinutos / 50);
+
+                  for (let i = 1; i < rows.length; i++) {
+                    const instanteAtual = formatInstant(rows[i].Instant);
+                    if (instanteAtual && instanteAtual < inicioAula) {
+                      out.houveRegressao = true;
+                      break;
+                    }
+                  }
+
+                  if (inicioAula && fimAula) {
+                    const duracaoTotalSegundos = (fimAula.getTime() - inicioAula.getTime()) / 1000;
+                    const segmentosCalculados = Math.floor(duracaoTotalSegundos / segundosPorSegmento) + 1;
+                    out.totalSegmentos = Math.min(2, segmentosCalculados);
+
+                  } else {
+                    out.totalSegmentos = 0;
+                  }
 
                   for (let i = 0; i < out.totalSegmentos; i++) {
                     const inicioSegmento = new Date(
-                      inicioAula.getTime() + i * 50 * 60 * 1000
+                      inicioAula.getTime() + i * segundosPorSegmento * 1000
                     );
                     const fimSegmento = new Date(
-                      inicioSegmento.getTime() + 50 * 60 * 1000
+                      inicioSegmento.getTime() + segundosPorSegmento * 1000
                     );
                     out.segmentosDetalhes.push({
                       segmento: i + 1,
-                      horarioInicial: formatTime(inicioSegmento),
-                      horarioFinal: formatTime(fimSegmento),
+                      horarioInicial: formatDateTime(inicioSegmento),
+                      horarioFinal: formatDateTime(fimSegmento),
                     });
                   }
                 }
@@ -173,25 +192,23 @@ function analisarSaltosTempo(dbPath, senha, lessonOid) {
 
                   const diffSegundos = (fAtu.getTime() - fAnt.getTime()) / 1000;
 
-                  if (diffSegundos >= 300) {
+                  if (diffSegundos >= 300) { // Salto de 5 minutos
                     const inicioAula = formatInstant(rows[0].Instant);
-                    const tempoDesdeInicioAnterior =
-                      (fAnt.getTime() - inicioAula.getTime()) / 1000;
-                    const segmentoInicio =
-                      Math.floor(tempoDesdeInicioAnterior / 3000) + 1;
 
-                    const tempoDesdeInicioAtual =
-                      (fAtu.getTime() - inicioAula.getTime()) / 1000;
-                    const segmentoFim =
-                      Math.floor(tempoDesdeInicioAtual / 3000) + 1;
+                    const tempoDesdeInicioAnterior = (fAnt.getTime() - inicioAula.getTime()) / 1000;
+                    const segmentoInicioCalc = Math.floor(tempoDesdeInicioAnterior / segundosPorSegmento) + 1;
+
+                    const tempoDesdeInicioAtual = (fAtu.getTime() - inicioAula.getTime()) / 1000;
+                    const segmentoFimCalc = Math.floor(tempoDesdeInicioAtual / segundosPorSegmento) + 1;
 
                     out.saltos.push({
-                      anterior: formatTime(fAnt),
-                      atual: formatTime(fAtu),
+                      anterior: formatDateTime(fAnt),
+                      atual: formatDateTime(fAtu),
                       diferencaSegundos: diffSegundos,
                       diferencaFormatada: segundosParaTempo(diffSegundos),
-                      segmento: segmentoInicio,
-                      segmentoFim: segmentoFim,
+                      // Limita o resultado do segmento a no máximo 2
+                      segmento: Math.min(2, segmentoInicioCalc),
+                      segmentoFim: Math.min(2, segmentoFimCalc),
                     });
                   }
                 }

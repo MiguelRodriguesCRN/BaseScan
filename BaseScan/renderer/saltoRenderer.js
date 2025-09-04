@@ -113,6 +113,20 @@ window.addEventListener('DOMContentLoaded', () => {
         `;
         return;
       }
+      
+      // Se houver regressão, exibe a mensagem e para a execução
+      if (resposta.houveRegressao) {
+        resultado.innerHTML = `
+          <p style="color:red; font-weight:bold; font-size:1.1em;">⚠️ Houve regressão de horário. É necessário fazer uma análise manual.</p>
+          <div class="tabela-wrapper">
+            <table class="tabela-aviso">
+              <thead><tr><th>Possível Problema</th></tr></thead>
+              <tbody><tr><td>⚠️ Possivelmente o coletor trocou de horário durante a aula.</td></tr></tbody>
+            </table>
+          </div>
+        `;
+        return; 
+      }
 
       resultado.innerHTML = '';
       let problemasEncontrados = false;
@@ -122,12 +136,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
       let mensagemStatus = '';
       let corStatus = '';
-
-      if (resposta.houveRegressao) {
-        mensagemStatus = '⚠️ Houve regressão detectada!';
-        corStatus = 'red';
-        problemasEncontrados = true;
-      } else if (saltosValidos.length === 0) {
+      
+      if (saltosValidos.length === 0) {
         mensagemStatus = '✅ Não houve salto.';
         corStatus = 'green';
       } else {
@@ -177,17 +187,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         debugHTML += `</tbody></table></div>`;
         resultado.innerHTML += debugHTML;
-      }
-
-      if (resposta.houveRegressao) {
-        resultado.innerHTML += `
-          <div class="tabela-wrapper">
-            <table class="tabela-aviso">
-              <thead><tr><th>Possível Problema</th></tr></thead>
-              <tbody><tr><td>⚠️ Possivelmente o coletor trocou de horário durante a aula.</td></tr></tbody>
-            </table>
-          </div>
-        `;
       }
 
       if (saltosValidos.length > 0) {
